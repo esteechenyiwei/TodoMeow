@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_bottom_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_top_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context=".MainActivity"
+    android:background="@color/colorPrimary">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="287dp"
+            android:layout_height="231dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/pngwave" />
+
+        <TextView
+            android:id="@+id/toDoMeow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ToDoMeow"
+            style="@style/text_view"
+            android:textSize="30dp"/>
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Username/Email"
+            android:inputType="textEmailAddress"
+            style = "@style/edit_text"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            style = "@style/edit_text"/>
+
+        <Button
+            android:id="@+id/login"
+            android:text="LOG IN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style = "@style/button_back"
+            android:onClick="onLoginClick"/>
+
+        <Button
+            android:id="@+id/create"
+            android:text="Create New Account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style = "@style/button_back"
+            android:onClick="onCreateClick"/>
+
+        <Button
+            android:id="@+id/forgotPassword"
+            android:text="Change Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style = "@style/button_back_pass"
+            android:onClick="onForgotPasswordClick"/>
+
+    </LinearLayout>
+</RelativeLayout>
