@@ -15,44 +15,52 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-try {
-  /**
-   * this is the account that Estee created on MongoDB Atlas, before you want to use it you should tell me and I will
-   * white list your ip address. For now , just use my user name and password
-   * username: estee
-   * password: PSAMarketing!
-   */
-  await mongoose.connect('mongodb+srv://estee:PSAMarketing!@cis350group33cluster-8lbyv.mongodb.net/test?retryWrites=true&w=majority', 
-                        { useNewUrlParser: true });
-} catch (error) {
-    console.log("error occured trying to connect to Mongo"  + error);
-}
+var Schema = mongoose.Schema;
+
+/**
+ * this is the account that Estee created on MongoDB Atlas, before you want to use it you should tell me and I will
+ * white list your ip address. For now , just use my user name and password
+ * username: estee
+ * password: PSAMarketing
+ */
+
+var cloudUrl = 'mongodb+srv://estee:PSAMarketing@cis350group33cluster-8lbyv.mongodb.net/test?retryWrites=true&w=majority';
+var localUrl = 'mongodb://localhost:27017';
+
+mongoose.connect(localUrl, 
+{ useNewUrlParser: true }).
+  catch(error => handleError(error));
+
+var handleError = (err) => {
+    console.log("error occured trying to connect to Mongo"  + err);
+};
+
 mongoose.connection.on('error', err => {
-    console.log("error during connection" + error);
+    console.log("error during connection" + err);
   });
 
 
 //building Schemas
 
 var todoSchema = new Schema({
-    title: {type: String, required: [true, "this to-do has no title!"]},
-    desc: {type: String, required: [true, "this to-do has no content!"]},
+    title: {type: String, required: true},
+    desc: {type: String, required: true},
     completed: {type: Boolean, default: false},
     deadline: {type: Date, default: null},
     creationDate: {type: Date, default: null},
 });
 
 var foodSchema = new Schema({
-    name: {type: String, required: [true, "no name for the food!!!"]},
-    cost: {Type: Number, required: true, min: 0},
+    name: {type: String, required: true},
+    cost: {type: Number, required: true, min: 0},
     function: {type: String, required: true},
-    boosts: {Type: Number, min: 0, required: true},
+    boosts: {type: Number, min: 0, required: true},
 });
 
 
 var userSchema = new Schema(
     {
-        name: {type: String, required: [true, "no username!!!"], unique: true},
+        name: {type: String, required: true, unique: true},
         
         password: {type: String, 
             required: true,
@@ -72,10 +80,10 @@ var userSchema = new Schema(
         currentTodos: {type: [todoSchema], default: []},
         missedTodos: {type: [todoSchema], default: []},
         completedTodos: {type: [todoSchema], default: []},
-        todosCompleted: {Type: Number, min: 0, default: 0},
+        todosCompleted: {type: Number, min: 0, default: 0},
         //create a pet schema in-place
         pet: new Schema({
-            name: String,
+            name: {type: String, default: "Meow"},
             level: {type: Number, min: 0, default: 0},
             health: {type: Number, default: 10},
             appearance: {type: String, default: ""},
@@ -120,12 +128,21 @@ var newperson1 = new User({
 //add one to-do to user1
 testtodolist.map((element, i) => {newperson1.currentTodos.push(element)});
 newperson1.save();
+//testing
+User.find().exec((err, res) => {
+    if (err) {
+        console.log("error in outputting all" + err);
+    } else {
+        console.log("all docs in User: " + res);
+    }
+});
 
 var newperson2 = new User({
     name: "ipadpro",   
     password: "uopelrnmJ90",
     email: "b@gmail.com",
 });
+
 var newperson3 = new User({
     name: "macbook",   
     password: "87654321Ui",
@@ -153,20 +170,101 @@ var newperson4 = new User({
  */
 
 
- //iteration 1: Login, create account, authentication
+ //iteration 1: Login, create account, authentication -> Android
 
- app.use('/login', (req, res) => {
-     var username = req.query.username;
+app.use('/login', (req, res) => {
+    var username = req.query.username;
+    var pw = req.query.password;
+    var email = req.query.email;
+    User.findOne( { username: username }, (err, person) => {
+        if (err) {
+            res.json( { 
+                'status' : 'error',
+                'message': 'dbError'
+            } );
+        } else if (!person) {
+            res.json( { 
+                'status' : 'error',
+                'message': 'username'
+            } );
+        } else {
+            if (person.password === pw) {
+                res.json( { 
+                    'status' : 'success',
+                    'message': ''
+                } );         
+            } else {
+                res.json( { 
+                    'status' : 'error',
+                    'message': 'password'
+                } );     
+            }
+        }
+    });
+});
+
+ app.use('/signup', (req, res) => {
+    var username = req.query.username;
+    var pw = req.query.password;
+    var email = req.query.email;
+    var newUser = new User({
+        username: username,
+        password: pw,
+        email: email,
+    });
+    newUser.save((err, product) => {
+        if (err) {
+            res.json({'status': 'error'});
+        } else {
+            res.json({'status': 'success'}, {'User': product})
+        };
+    });
 
  });
 
- app.use('/login', (req, res) => {
+app.use('/changepassword', (req, res) => {
+    var username = req.query.username;
+    var oldpw = req.query.oldpassword;
+    var newpw = req.query.newpassword;
 
+    User.findOneAndUpdate( { 
+        username: username, 
+        password: oldpw,
+    }, 
+    {$set: {password: newpw}}, 
+    (err, person) => {
+        if (err) {
+            res.json( { 
+                'status' : 'error',
+                'message': 'dbError'
+            } );
+        } else if (!person) {
+            res.json( { 
+                'status' : 'error',
+                'message': 'username/password'
+            } );
+        } else {
+            res.json( { 
+                'status' : 'success',
+                'message': ''
+            } );     
+        }
+    } );
+ });
+
+
+ /**
+  *  Iteration 1: Add task, edit task, delete task -> Android 
+  * */ 
+
+app.use('/gettask', (req, res) => {
+    Task.find({}, (err, product) => {
+        res.json(product);
+
+    });
 });
 
-
- //Iteration 1: Add task, edit task, delete task
- app.use('/add', (req, res) => {
+app.use('/addtask', (req, res) => {
     var title = req.query.title;
     var description = req.query.desc;
     var ddl = req.query.deadline;
@@ -177,21 +275,55 @@ var newperson4 = new User({
         deadline: ddl,
         currDate: currDate,
     });
-    newTask.save();
+    newTask.save((err, product) => {
+        if (err) {
+            res.json({'status': 'error'});
+        } else {
+            res.json({'status': 'success'}, {'Task': product})
+        };
+    });
 });
 
-app.use('/delete', (req, res) => {
+app.use('/edittask', (req, res) => {
     var title = req.query.title;
-    var description = req.query.desc;
-    var ddl = req.query.deadline;
-    var currDate = new Date();
-    var newTask = new Task({
-        title: title,
-        desc: description,
-        deadline: ddl,
-        currDate: currDate,
-    });
-    newTask.save();
+    var desc = req.query.desc;
+
+    Task.findOneAndUpdate( { 
+        title: title
+    }, 
+    {$set: {password: newpw}}, 
+    (err, person) => {
+        if (err) {
+            res.json( { 
+                'status' : 'error',
+                'message': 'dbError'
+            } );
+        } else if (!person) {
+            res.json( { 
+                'status' : 'error',
+                'message': 'username/password'
+            } );
+        } else {
+            res.json( { 
+                'status' : 'success',
+                'message': ''
+            } );     
+        }
+    } );
+});
+
+
+app.use('/deletetask', (req, res) => {
+    var title = req.query.title;
+
+    Task.findOneAndDelete({title: title}, 
+        (err, feedback) => {
+            if (err) {
+                res.json({'status': 'error'});
+            } else {
+                res.json({'status': 'success'}, {'deleted': feedback.title})
+            };
+        });
 });
  
 
@@ -261,6 +393,7 @@ app.use('/test', (req, res) => {
 // This endpoint allows a caller to add data to the Map of Person objects
 // You do not need to do anything with this code; it is only provided
 // as an example but will also be used for grading your code
+
 app.use('/set', (req, res) => {
     // read id and status from query parameters
     var id = req.query.id;
@@ -282,3 +415,4 @@ app.use('/', (req, res) => {
 app.listen(3000, () => {
     console.log('Listening on port 3000');
 });
+
