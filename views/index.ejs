@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>TodoMoew</title>
+    <script
+      src="https://code.jquery.com/jquery-1.12.3.min.js"
+      integrity="sha384-ugqypGWrzPLdx2zEQTF17cVktjb01piRKaDNnbYGRSxyEoeAm+MKZVtbDUYjxfZ6"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="description" content="a Todo App to Collect Cats" />
+    <meta name="author" content="BBBB" />
+
+    <link rel="stylesheet" href="index.css" type="text/css" />
+    <!-- bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light"
+      style="background-color: rgba(241, 228, 218,0.4)"
+    >
+      <a class="navbar-brand" href="#">ToDoMoew</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">
+              Tasks <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Cats</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Friends</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="jumbotron">
+      <div class="mx-auto" style="width: 50%;">
+        <h1 class="display-4">To Do</h1>
+        <p class="lead">
+          Get your tasks done with cats!
+        </p>
+        <hr class="my-4" />
+        <form id="form input" method="POST" action="/">
+          <div class="form-group">
+            <input
+              type="text"
+              name="task"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder="What are your goals today?"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-info btn-lg pawBtn"
+            href="#"
+            role="button"
+          >
+            ADD
+          </button>
+          <!-- <button type="submit">Add</button> -->
+        </form>
+      </div>
+    </div>
+
+    <div class="list">
+      <% for(var i=0; i < tasks.length; i++) { %>
+      <label>
+        <input type="checkbox" name="" />
+        <i></i>
+        <span><%= tasks[i].task %></span>
+      </label>
+      <%}%>
+    </div>
+
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
