@@ -12,6 +12,10 @@ body {
   position: relative;
   background: #f1e4da;
   overflow-wrap: break-word;
+  border-radius: 5%;
+  /* border: 1px dotted;
+  border-color: #ee9ca8;
+  box-shadow: #d6949d; */
 }
 
 .list label {
@@ -98,7 +102,7 @@ body {
   background-position-y: 15%;
   background-repeat: no-repeat;
   text-align: center;
-  background-color: #f1e4da !important;
+  background-color: #faf1ea !important;
 }
 
 .lead {

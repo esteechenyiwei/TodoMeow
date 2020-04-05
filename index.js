@@ -11,22 +11,22 @@ var currid = 0;
 //definition of the Task class -- DO NOT CHANGE IT!
 var tasks = [
   {
-    name: "run laps",
-    description:
+    title: "run laps",
+    desc:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque egestas congue quisque egestas. ",
   },
   {
-    name: "finish CIS350",
-    description:
+    title: "finish CIS350",
+    desc:
       "Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Nunc congue nisi vitae suscipit tellus mauris a diam.",
   },
-  { name: "play Zelda", description: "..." },
+  { title: "play Zelda", desc: "..." },
   {
-    name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    description: "",
+    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    desc: "",
   },
-  { name: "sed do eiusmod tempor incididunt ut", description: "" },
-  { name: "abore et dolore", description: "no description" },
+  { title: "sed do eiusmod tempor incididunt ut", desc: "" },
+  { title: "abore et dolore", desc: "no desc" },
 ];
 //middleware to run in post request
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
