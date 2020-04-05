@@ -10,10 +10,14 @@
  *  @author Yiwei (Estee) Chen <estee813@seas.upenn.edu>
  */
 
+ /**
+  * Note to users:
+  * 1. currently when creating accounts, two users can't have the same password.
+  * 
+  */
 
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -66,7 +70,7 @@ var userSchema = new Schema(
             required: true,
             validator: [(val) => { return ("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/".test(val)); }, 
                          "password must be between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"],
-            unique: true,
+            unique: false,
         },
         // profilePictureUrl: String, (might implement in the future if got time)
         email: {
@@ -116,23 +120,50 @@ var userSchema = new Schema(
     desc: "by 4.9",
     title: "hw3",
     creationDate: new Date()
+},{
+    desc: "by 4.13",
+    title: "hw4",
+    creationDate: new Date()
+},{
+    desc: "by 5.1",
+    title: "hw5",
+    creationDate: new Date()
+}, 
+{
+    desc: "by 4.31",
+    title: "hw6",
+    creationDate: new Date()
+},{
+    desc: "by 5.2",
+    title: "hw7",
+    creationDate: new Date()
 }]
 
-//add some users
-var newperson1 = new User({
-    name: "ipadair",   
-    password: "1239248Aa",
-    email: "a@gmail.com",
-});
+// //add some users
+// var newperson1 = new User({
+//     name: "ipadair",   
+//     password: "1239248Aa",
+//     email: "a@gmail.com",
+// });
 
 //add one to-do to user1
-testtodolist.map((element, i) => {newperson1.currentTodos.push(element)});
-newperson1.save();
+// testtodolist.map((element, i) => {newperson1.currentTodos.push(element)});
+// newperson1.save((err, doc) => {
+//     if (err) {
+//         res.json({'status': 'error'});
+//         console.log("error in test");
+//     } else {
+//         res.json({'status': 'success'}, {'User': product})
+//     };
+// });
+
 //testing
+var alldata;
 User.find().exec((err, res) => {
     if (err) {
         console.log("error in outputting all" + err);
     } else {
+        alldata = res;
         console.log("all docs in User: " + res);
     }
 });
@@ -154,9 +185,9 @@ var newperson4 = new User({
     email: "d@gmail.com",
 });
 
-
-
-
+newperson2.save();
+newperson3.save();
+newperson4.save();
 
 /**
  * some query functions that needs to be written:
@@ -176,7 +207,7 @@ app.use('/login', (req, res) => {
     var username = req.query.username;
     var pw = req.query.password;
     var email = req.query.email;
-    User.findOne( { username: username }, (err, person) => {
+    User.findOne( { name: username }, (err, person) => {
         if (err) {
             res.json( { 
                 'status' : 'error',
@@ -208,15 +239,17 @@ app.use('/login', (req, res) => {
     var pw = req.query.password;
     var email = req.query.email;
     var newUser = new User({
-        username: username,
+        name: username,
         password: pw,
         email: email,
     });
     newUser.save((err, product) => {
         if (err) {
             res.json({'status': 'error'});
+            console.log(err);
         } else {
-            res.json({'status': 'success'}, {'User': product})
+            res.json([{'status': 'success'}, product]);
+
         };
     });
 
@@ -228,7 +261,7 @@ app.use('/changepassword', (req, res) => {
     var newpw = req.query.newpassword;
 
     User.findOneAndUpdate( { 
-        username: username, 
+        name: username, 
         password: oldpw,
     }, 
     {$set: {password: newpw}}, 
@@ -258,157 +291,117 @@ app.use('/changepassword', (req, res) => {
   * */ 
 
 app.use('/gettask', (req, res) => {
-    Task.find({}, (err, product) => {
+    Todo.find({}, (err, product) => {
         res.json(product);
 
     });
 });
 
 app.use('/addtask', (req, res) => {
+    var username = req.query.username;
     var title = req.query.title;
     var description = req.query.desc;
     var ddl = req.query.deadline;
-    var currDate = new Date();
-    var newTask = new Task({
+    var now = new Date();
+    var newTask = new Todo({
         title: title,
         desc: description,
         deadline: ddl,
-        currDate: currDate,
+        currDate: now,
     });
-    newTask.save((err, product) => {
-        if (err) {
-            res.json({'status': 'error'});
-        } else {
-            res.json({'status': 'success'}, {'Task': product})
-        };
-    });
-});
-
-app.use('/edittask', (req, res) => {
-    var title = req.query.title;
-    var desc = req.query.desc;
-
-    Task.findOneAndUpdate( { 
-        title: title
+    User.findOne( { 
+        name: username
     }, 
-    {$set: {password: newpw}}, 
     (err, person) => {
         if (err) {
             res.json( { 
                 'status' : 'error',
                 'message': 'dbError'
             } );
+            console.log("error in adding task");
         } else if (!person) {
             res.json( { 
                 'status' : 'error',
-                'message': 'username/password'
+                'message': 'no such person'
             } );
+
         } else {
-            res.json( { 
-                'status' : 'success',
-                'message': ''
-            } );     
+            person.currentTodos.push(newTask);
+            person.save((err, product) => {
+                if (err) {
+                    res.json({'status': 'error in saving person'});
+                    console.log("error in saving task in add");
+                } else {
+                    res.json({'status': 'success'});
+                };
+            });
         }
     } );
+
 });
 
+// app.use('/edittask', (req, res) => {
+//     var title = req.query.title;
+//     var desc = req.query.desc;
 
-app.use('/deletetask', (req, res) => {
-    var title = req.query.title;
-
-    Task.findOneAndDelete({title: title}, 
-        (err, feedback) => {
-            if (err) {
-                res.json({'status': 'error'});
-            } else {
-                res.json({'status': 'success'}, {'deleted': feedback.title})
-            };
-        });
-});
- 
-
-
-
-// This is the '/test' endpoint that you can use to check that this works
-// Do not change this, as you will want to use it to check the test code in Part 2
-app.use('/test', (req, res) => {
-    // create a JSON object
-    var data = { 'message' : 'It works!' };
-    // send it back
-    res.json(data);
-});
-
-// // This is the endpoint you need to implement in Part 1 of this assignment
-// app.use('/get', (req, res) => {
-//     //inputData might be an array
-//     var inputID = req.query.id;
-//     if (inputID) {
-//         if (Array.isArray(inputID)) {
-//             var listOfPromptedPeople = [];
-//             for (const id of inputID) {
-//                 if (!people.has(id)) {
-//                     var data = { 'id' : id, 
-//                                 'status': 'unknown',
-//                                 'date': new Date().getTime()};
-                    
-//                 } else {
-//                     var stat = people.get(id).status;
-//                     var date = people.get(id).date;
-//                     var data = { 'id' : id, 
-//                             'status': stat,
-//                             'date': date};
-
-//                 }
-
-//                 listOfPromptedPeople.push(data);
-//             }
-//             res.json(listOfPromptedPeople);
+//     Todo.findOneAndUpdate( { 
+//         title: title
+//     }, 
+//     {$set: {password: newpw}}, 
+//     (err, person) => {
+//         if (err) {
+//             res.json( { 
+//                 'status' : 'error',
+//                 'message': 'dbError'
+//             } );
+//         } else if (!person) {
+//             res.json( { 
+//                 'status' : 'error',
+//                 'message': 'username/password'
+//             } );
 //         } else {
-//             var inputArray = [];
-//             var stat = people.get(inputID).status;
-//             var date = people.get(inputID).date;
-//             if (people.has(inputID)) {
-//                 var data = { 'id' : inputID, 
-//                             'status': stat,
-//                             'date': date};
-//             } else {
-//                 var data = { 'id' : inputID, 
-//                             'status': 'unknown',
-//                             'date': new Date().getTime()};
-//             }
-//             inputArray.push(data);
-//             res.json(inputArray);
-//         } 
-
-//     } else {      
-//         res.json([]);
-//     }
+//             res.json( { 
+//                 'status' : 'success',
+//                 'message': ''
+//             } );     
+//         }
+//     } );
 // });
 
 
+app.use('/deletetask', (req, res) => {
+    var username = req.query.username;
+    var title = req.query.title;
+    User.findOneAndUpdate( { 
+        name: username
+    }, 
+    {$pull: {currentTodos: {title: title}}},
+    (err, person) => {
+        if (err) {
+            res.json( { 
+                status: 'error',
+                message: 'dbError'
+            } );
+            console.log("error in adding task");
+        } else if (!person) {
+            res.json( { 
+                status: 'error',
+                message: 'no such person'
+            } );
 
-// -------------------------------------------------------------------------
-// Code from 350 homework
-
-// This endpoint allows a caller to add data to the Map of Person objects
-// You do not need to do anything with this code; it is only provided
-// as an example but will also be used for grading your code
-
-app.use('/set', (req, res) => {
-    // read id and status from query parameters
-    var id = req.query.id;
-    var status = req.query.status;
-    // create new Person object
-    var person = new Person(id, status, new Date().getTime());
-    // add it to Map
-    people.set(id, person);
-    // send it back to caller
-    res.json(person);
+        } else {
+            res.json({'status': 'success'});
+        }
+    } );
 });
+ 
+
+// This is the '/test' endpoint that you can use to check that this works
+// Do not change this, as you will want to use it to check the test code in Part 2
 
 // This just sends back a message for any URL path not covered above
 app.use('/', (req, res) => {
-    res.send('Default message.');
+    res.json(alldata);
 });
 
 // This starts the web server on port 3000. 
