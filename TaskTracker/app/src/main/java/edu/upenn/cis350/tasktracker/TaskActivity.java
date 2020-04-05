@@ -57,6 +57,7 @@ public class TaskActivity extends AppCompatActivity {
     protected void onDeleteButtonClick(View view) {
         Button b = findViewById(R.id.deletebtn);
 
+
     }
 
 }

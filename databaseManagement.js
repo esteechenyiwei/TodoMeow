@@ -50,7 +50,7 @@ var todoSchema = new Schema({
     title: {type: String, required: true},
     desc: {type: String, required: true},
     completed: {type: Boolean, default: false},
-    deadline: {type: Date, default: null},
+    deadline: {type: String, default: ""},
     creationDate: {type: Date, default: null},
 });
 
@@ -295,10 +295,28 @@ app.use('/changepassword', (req, res) => {
   * */ 
 
 app.use('/gettask', (req, res) => {
-    Todo.find({}, (err, product) => {
-        res.json(product);
+    var username = req.query.username;
 
-    });
+    User.findOne( { 
+        name: username
+    }, 
+    (err, person) => {
+        if (err) {
+            res.json( [{ 
+                'status' : 'error',
+                'message': 'dbError'
+            }] );
+            console.log("error in getting task");
+        } else if (!person) {
+            res.json( [{ 
+                'status' : 'error',
+                'message': 'no such person'
+            }]);
+
+        } else {
+            res.json(person.currentTodos);
+        }
+    } );
 });
 
 app.use('/addtask', (req, res) => {
@@ -318,25 +336,25 @@ app.use('/addtask', (req, res) => {
     }, 
     (err, person) => {
         if (err) {
-            res.json( [{ 
+            res.json( { 
                 'status' : 'error',
                 'message': 'dbError'
-            }] );
+            } );
             console.log("error in adding task");
         } else if (!person) {
-            res.json( [{ 
+            res.json( { 
                 'status' : 'error',
                 'message': 'no such person'
-            }]);
+            });
 
         } else {
             person.currentTodos.push(newTask);
             person.save((err, product) => {
                 if (err) {
-                    res.json([{'status': 'error in saving person'}]);
+                    res.json({'status': 'error in saving person'});
                     console.log("error in saving task in add");
                 } else {
-                    res.json([newTask]);
+                    res.json({'status': 'success'});
                 };
             });
         }

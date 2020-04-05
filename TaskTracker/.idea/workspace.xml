@@ -11,9 +11,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b992560a-d67e-40e5-8372-8872666ee705" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../databaseManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../databaseManagement.js" afterDir="false" />
-    </list>
+    <list default="true" id="b992560a-d67e-40e5-8372-8872666ee705" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
