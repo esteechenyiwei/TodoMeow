@@ -10,12 +10,12 @@ app.set("views", __dirname);
 var currid = 0;
 //definition of the Task class -- DO NOT CHANGE IT!
 var tasks = [
-  { task: "run laps" },
-  { task: "finish CIS350" },
-  { task: "play Zelda" },
-  { task: "Lorem ipsum dolor sit amet, consectetur adipiscing elit" },
-  { task: "sed do eiusmod tempor incididunt ut" },
-  { task: "abore et dolore" },
+  { name: "run laps" },
+  { name: "finish CIS350" },
+  { name: "play Zelda" },
+  { name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit" },
+  { name: "sed do eiusmod tempor incididunt ut" },
+  { name: "abore et dolore" },
 ];
 //middleware to run in post request
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -26,7 +26,6 @@ app.get("/", function (req, res) {
 
 app.post("/", urlencodedParser, function (req, res) {
   tasks.push(req.body);
-  //   res.json(tasks);
   res.render("views/index", { tasks: tasks });
 });
 
