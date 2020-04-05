@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config>
+        <device id="pixel_2" />
+      </config>
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b992560a-d67e-40e5-8372-8872666ee705" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/Task Tracker.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/app.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/androidTest/java/edu/upenn/cis350/tasktracker/ExampleInstrumentedTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/ChangePasswordActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/CreateLoginActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/CreateTaskActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/LoginAccessWebTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/LoginDataSource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/MainActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/Task.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/TaskAccessWebTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/TaskActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/TaskAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/java/edu/upenn/cis350/tasktracker/TaskDataSource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/bgbtn.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/bgbtncancel.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/bgbtncreate.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/bginputsel.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/bginputtask.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/bginputunsel.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/bgitemtask.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/button_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/button_pass_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/cat1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/create.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/edittext_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/forgot.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/drawable/pngwave.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/layout/activity_create_task.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/layout/activity_login_create.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/layout/activity_task.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/layout/change_password_activity.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/layout/item_task.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/values/colors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/values/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/main/res/values/styles.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/app/src/test/java/edu/upenn/cis350/tasktracker/ExampleUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/local.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AndroidApp/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../databaseManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../databaseManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_28_cis_350_hw4_" />
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="layoutResourceFile" />
+        <option value="resourceFile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1a2BQhPVTnp5NHsDxYqZFqgmdN4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.language.Kotlin.scripting" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/values" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/edu/upenn/cis350/tasktracker" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/font" />
+    </key>
+    <key name="android.template.packageName">
+      <recent name="edu.upenn.cis350.tasktracker" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/java/edu/upenn/cis350/tasktracker" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/font" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b992560a-d67e-40e5-8372-8872666ee705" name="Default Changelist" comment="" />
+      <created>1585923793349</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585923793349</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Android App before fully connected to MongoDB">
+      <created>1586018668042</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586018668042</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Android App before fully connected to MongoDB">
+      <created>1586052911719</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1586052911719</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Android App before fully connected to MongoDB" />
+    <option name="LAST_COMMIT_MESSAGE" value="Android App before fully connected to MongoDB" />
+  </component>
+</project>
