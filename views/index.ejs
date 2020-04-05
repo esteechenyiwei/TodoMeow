@@ -26,7 +26,7 @@
   <body>
     <nav
       class="navbar navbar-expand-lg navbar-light"
-      style="background-color: rgba(241, 228, 218,0.4)"
+      style="background-color: rgba(241, 228, 218, 0.4);"
     >
       <a class="navbar-brand" href="#">ToDoMoew</a>
       <button
@@ -60,7 +60,7 @@
 
     <div class="jumbotron">
       <div class="mx-auto" style="width: 50%;">
-        <h1 class="display-4">To Do</h1>
+        <h1 class="display-4">TodoMoew</h1>
         <p class="lead">
           Get your tasks done with cats!
         </p>
@@ -69,11 +69,21 @@
           <div class="form-group">
             <input
               type="text"
-              name="task"
+              name="title"
               class="form-control"
               id="exampleFormControlInput1"
-              placeholder="What are your goals today?"
+              placeholder="enter task name"
             />
+          </div>
+          <div class="form-group">
+            <textarea
+              rows="3"
+              type="text"
+              name="desc"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder="enter description"
+            ></textarea>
           </div>
           <button
             type="submit"
@@ -93,7 +103,8 @@
       <label>
         <input type="checkbox" name="" />
         <i></i>
-        <span><%= tasks[i].task %></span>
+        <span><%= tasks[i].title %></span>
+        <p><%= tasks[i].desc %></p>
       </label>
       <%}%>
     </div>

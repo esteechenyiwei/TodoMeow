@@ -7,9 +7,15 @@ body {
 
 .list {
   padding: 1% 75px 10px 30px;
+  margin-left: 10%;
+  margin-right: 10%;
   position: relative;
   background: #f1e4da;
   overflow-wrap: break-word;
+  border-radius: 5%;
+  /* border: 1px dotted;
+  border-color: #ee9ca8;
+  box-shadow: #d6949d; */
 }
 
 .list label {
@@ -51,9 +57,14 @@ body {
   height: 15px;
   transform: rotate(-45deg);
 }
-
+.list p {
+  margin-left: 45px;
+  font-size: medium;
+  color: rgba(0, 0, 0, 0.6);
+}
 .list span {
   position: relative;
+  font-weight: 350;
   left: 40px;
   transition: 0.5s;
 }
@@ -80,6 +91,9 @@ body {
 .list input[type="checkbox"]:checked ~ span {
   text-decoration: line-through;
 }
+.inpu {
+  margin-bottom: 1pt;
+}
 
 .jumbotron {
   background-image: url("paw.png");
@@ -88,7 +102,7 @@ body {
   background-position-y: 15%;
   background-repeat: no-repeat;
   text-align: center;
-  background-color: #f1e4da !important;
+  background-color: #faf1ea !important;
 }
 
 .lead {
