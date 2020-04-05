@@ -80,6 +80,9 @@ body {
 .list input[type="checkbox"]:checked ~ span {
   text-decoration: line-through;
 }
+.inpu {
+  margin-bottom: 1pt;
+}
 
 .jumbotron {
   background-image: url("paw.png");
