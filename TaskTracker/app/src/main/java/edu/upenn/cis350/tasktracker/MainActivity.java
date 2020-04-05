@@ -51,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
                     "error: message -- " + status,
                     Toast.LENGTH_LONG).show();
             return;
-        }
-        else {
+        } else if (status == null) {
+            System.out.println("error occured");
+        } else {
             Toast.makeText(
                     getApplicationContext(),
                     "Incorrect username or password!",
