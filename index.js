@@ -10,12 +10,23 @@ app.set("views", __dirname);
 var currid = 0;
 //definition of the Task class -- DO NOT CHANGE IT!
 var tasks = [
-  { name: "run laps" },
-  { name: "finish CIS350" },
-  { name: "play Zelda" },
-  { name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit" },
-  { name: "sed do eiusmod tempor incididunt ut" },
-  { name: "abore et dolore" },
+  {
+    name: "run laps",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque egestas congue quisque egestas. ",
+  },
+  {
+    name: "finish CIS350",
+    description:
+      "Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Nunc congue nisi vitae suscipit tellus mauris a diam.",
+  },
+  { name: "play Zelda", description: "..." },
+  {
+    name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    description: "",
+  },
+  { name: "sed do eiusmod tempor incididunt ut", description: "" },
+  { name: "abore et dolore", description: "no description" },
 ];
 //middleware to run in post request
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
