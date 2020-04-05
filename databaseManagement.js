@@ -155,7 +155,6 @@ var newperson1 = new User({
 testtodolist.map((element, i) => {newperson1.currentTodos.push(element)});
 newperson1.save((err, doc) => {
     if (err) {
-        res.json({'status': 'error'});
         console.log("error in test");
     } else {
         res.json({'status': 'success'}, {'User': product})
@@ -337,7 +336,7 @@ app.use('/addtask', (req, res) => {
                     res.json([{'status': 'error in saving person'}]);
                     console.log("error in saving task in add");
                 } else {
-                    res.json([{'status': 'success'}]);
+                    res.json([newTask]);
                 };
             });
         }
