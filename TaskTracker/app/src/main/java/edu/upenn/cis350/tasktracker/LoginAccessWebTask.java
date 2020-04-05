@@ -25,7 +25,18 @@ public class LoginAccessWebTask extends AsyncTask<URL, String, String> {
             String msg = in.nextLine();
             JSONObject jo = new JSONObject(msg);
             String status = jo.getString("status");
-            return status;
+            /**
+             * Estee's note to Jasmine: I added this so the error message can be
+             * displayed, easier for debug. The logic is that if the status is
+             * success, then "success" is returned. Else, the error message in the
+             * returned json object is returned.
+             */
+
+            if (status.equals("success")) {
+                return status;
+            } else {
+                return jo.getString("message");
+            }
         } catch (ProtocolException e) {
             e.printStackTrace();
             return e.toString();

@@ -45,7 +45,14 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(this, TaskActivity.class);
             i.putExtra("username", usernamestr);
             startActivityForResult(i, D);
-        } else {
+        } else if (status.equals("error")) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "error: message -- " + status,
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        else {
             Toast.makeText(
                     getApplicationContext(),
                     "Incorrect username or password!",
