@@ -139,23 +139,28 @@ var userSchema = new Schema(
     creationDate: new Date()
 }]
 
-// //add some users
-// var newperson1 = new User({
-//     name: "ipadair",   
-//     password: "1239248Aa",
-//     email: "a@gmail.com",
-// });
+/**
+ * add some users
+ */
 
-//add one to-do to user1
-// testtodolist.map((element, i) => {newperson1.currentTodos.push(element)});
-// newperson1.save((err, doc) => {
-//     if (err) {
-//         res.json({'status': 'error'});
-//         console.log("error in test");
-//     } else {
-//         res.json({'status': 'success'}, {'User': product})
-//     };
-// });
+var newperson1 = new User({
+    name: "ipadair",   
+    password: "1239248Aa",
+    email: "a@gmail.com",
+});
+/**
+ * add one to-do to user1
+ */
+
+testtodolist.map((element, i) => {newperson1.currentTodos.push(element)});
+newperson1.save((err, doc) => {
+    if (err) {
+        res.json({'status': 'error'});
+        console.log("error in test");
+    } else {
+        res.json({'status': 'success'}, {'User': product})
+    };
+});
 
 //testing
 var alldata;
@@ -379,14 +384,14 @@ app.use('/deletetask', (req, res) => {
     (err, person) => {
         if (err) {
             res.json( { 
-                status: 'error',
-                message: 'dbError'
+                'status': 'error',
+                'message': 'dbError'
             } );
             console.log("error in adding task");
         } else if (!person) {
             res.json( { 
-                status: 'error',
-                message: 'no such person'
+                'status': 'error',
+                'message': 'no such person'
             } );
 
         } else {

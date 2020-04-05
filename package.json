@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/cis350/350S20-33/issues"
   },
-  "homepage": "https://github.com/cis350/350S20-33#readme"
+  "homepage": "https://github.com/cis350/350S20-33#readme",
+  "dependencies": {
+    "mongodb": "^3.5.5"
+  }
 }

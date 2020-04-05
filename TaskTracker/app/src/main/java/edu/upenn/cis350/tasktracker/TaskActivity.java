@@ -22,6 +22,7 @@ public class TaskActivity extends AppCompatActivity {
     Button addbtn;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,11 @@ public class TaskActivity extends AppCompatActivity {
 
         taskAdapter = new TaskAdapter(TaskActivity.this, list);
         ourTasks.setAdapter(taskAdapter);
+    }
+
+    protected void onDeleteButtonClick(View view) {
+        Button b = findViewById(R.id.deletebtn);
+
     }
 
 }
