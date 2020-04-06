@@ -1,18 +1,22 @@
 /**
  * Project: CIS 350 Group Project: 
- * Introduction of this file: This file is where the node express app is. This file creates a connection with the database, 
+ * Introduction of this file: 
+ * This file is where the node express app is. This file creates a connection with the database, 
  * creates the schema used for each class, and specifies the SchemaType and options for each property of each class.
  * It also implements functions to handle http requests sent by the Android and Web end.  
+ * 
  * Major functions achieved: 
  * 1. Creates, updates and removes documents from the MongoDB Cluster on requests.
  * 2. Returns a ordered list of top 10 users from the data base. 
  *
  *  @author Yiwei (Estee) Chen <estee813@seas.upenn.edu>
+ *  @author Qingyuan Peng <pqy@seas.upenn.edu>
  */
 
  /**
   * Note to users:
   * 1. currently when creating accounts, two users can't have the same password.
+  * 2. Deadline is not required for iter 1.
   * 
   */
 
@@ -20,6 +24,16 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var bodyParser = require("body-parser");
+
+/**
+ * setup steps for the webapp
+ */
+app.use(express.static(__dirname + "/views"));
+app.use(express.static(__dirname + "/public"));
+app.set("view engine", "ejs");
+app.set("views", __dirname);
+
 
 /**
  * this is the account that Estee created on MongoDB Atlas, before you want to use it you should tell me and I will
@@ -42,6 +56,7 @@ var handleError = (err) => {
 mongoose.connection.on('error', err => {
     console.log("error during connection" + err);
   });
+
 
 
 //building Schemas
@@ -105,6 +120,18 @@ var userSchema = new Schema(
  var Food = mongoose.model('Food', foodSchema);
  var User = mongoose.model('User', userSchema);
 
+/**
+ * remove all from db to restart the test
+ * don't use normally
+ */
+// User.deleteMany( (err, c) => {
+//     if (!err) {
+//         console.log("all deleted? no error ");
+//     } else {
+//         console.log(err);
+//     }
+// });
+
  //test todo data
  var testtodolist = [{
     desc: "by tomorrow",
@@ -157,7 +184,7 @@ newperson1.save((err, doc) => {
     if (err) {
         console.log("error in test");
     } else {
-        res.json({'status': 'success'}, {'User': product})
+        console.log({'status': 'success'}, {'User': doc});
     };
 });
 
@@ -204,8 +231,10 @@ newperson4.save();
  * 8. pull out a list of top 10 task-doers
  */
 
+/**
+ *  Login, create account, authentication -> Android
+ */
 
- //iteration 1: Login, create account, authentication -> Android
 
 app.use('/login', (req, res) => {
     var username = req.query.username;
@@ -416,10 +445,86 @@ app.use('/deletetask', (req, res) => {
         }
     } );
 });
+
+/**
+ * 
+ * Iteration 1: Web App Handle Tasks
+ */
  
 
-// This is the '/test' endpoint that you can use to check that this works
-// Do not change this, as you will want to use it to check the test code in Part 2
+//middleware to run in post request
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+app.get("/", function (req, res) {
+    // var username = req.query.username;
+    //testing:
+    var username = "ipadair";
+
+    var tasks = [];
+    User.findOne( { 
+        name: username
+    }, 
+    (err, person) => {
+        if (err) {
+            console.log("error in getting task");
+            res.render("views/index", { tasks: tasks });
+        } else if (!person) {
+            console.log("error in getting the person");
+            res.render("views/index", { tasks: tasks });
+        } else {
+            tasks = person.currentTodos;
+            res.render("views/index", { tasks: tasks });
+        }
+    } );
+
+});
+
+app.post("/", urlencodedParser, function (req, res) {
+    // var username = req.query.username;
+    //testing:
+    var username = "ipadair";
+
+    var title = req.body.title;
+    var description = req.body.desc;
+    // var ddl = req.query.deadline;
+    var now = new Date();
+    var newTask = new Todo({
+        title: title,
+        desc: description,
+        deadline: "",
+        currDate: now,
+    });
+    User.findOne( { 
+        name: username
+    }, 
+    (err, person) => {
+        if (err) {
+
+            console.log("error in adding task");
+        } else if (!person) {
+            console.log("no such person, error in getting user info");
+        } else {
+            person.currentTodos.push(newTask);
+            person.save((err, product) => {
+                if (err) {
+                    res.render("views/index", { tasks: person.currentTodos });
+                    console.log("error in saving task in add");
+                } else {
+                    console.log("succeeded in adding task and saving");
+                };
+            });
+            res.render("views/index", { tasks: person.currentTodos });
+        }
+    } );
+  
+});
+
+app.delete("/:task", function (req, res) {
+  res.render("views/index", { tasks: tasks });
+//   tasks = tasks.filter(function (todo) {
+//     return todo.item.replace(/ /g, "-") !== req.params.item;
+//   });
+});
 
 // This just sends back a message for any URL path not covered above
 app.use('/', (req, res) => {
