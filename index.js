@@ -2,6 +2,10 @@ var bodyParser = require("body-parser");
 var express = require("express");
 var app = express();
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const flash = require("express-flash");
@@ -23,7 +27,7 @@ app.set("view engine", "ejs");
 app.set("views", __dirname);
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
-console.log(process.env.SESSION_SECRET);
+// console.log(process.env.SESSION_SECRET);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
