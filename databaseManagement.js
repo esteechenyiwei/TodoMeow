@@ -170,23 +170,23 @@ var userSchema = new Schema(
  * add some users
  */
 
-var newperson1 = new User({
-    name: "ipadair",   
-    password: "1239248Aa",
-    email: "a@gmail.com",
-});
+// var newperson1 = new User({
+//     name: "ipadair",   
+//     password: "1239248Aa",
+//     email: "a@gmail.com",
+// });
 /**
  * add one to-do to user1
  */
 
-testtodolist.map((element, i) => {newperson1.currentTodos.push(element)});
-newperson1.save((err, doc) => {
-    if (err) {
-        console.log("error in test");
-    } else {
-        console.log({'status': 'success'}, {'User': doc});
-    };
-});
+// testtodolist.map((element, i) => {newperson1.currentTodos.push(element)});
+// newperson1.save((err, doc) => {
+//     if (err) {
+//         console.log("error in test");
+//     } else {
+//         console.log({'status': 'success'}, {'User': doc});
+//     };
+// });
 
 //testing
 var alldata;
@@ -199,26 +199,26 @@ User.find().exec((err, res) => {
     }
 });
 
-var newperson2 = new User({
-    name: "ipadpro",   
-    password: "uopelrnmJ90",
-    email: "b@gmail.com",
-});
+// var newperson2 = new User({
+//     name: "ipadpro",   
+//     password: "uopelrnmJ90",
+//     email: "b@gmail.com",
+// });
 
-var newperson3 = new User({
-    name: "macbook",   
-    password: "87654321Ui",
-    email: "c@gmail.com",
-});
-var newperson4 = new User({
-    name: "applewatch",   
-    password: "87654321diff",
-    email: "d@gmail.com",
-});
+// var newperson3 = new User({
+//     name: "macbook",   
+//     password: "87654321Ui",
+//     email: "c@gmail.com",
+// });
+// var newperson4 = new User({
+//     name: "applewatch",   
+//     password: "87654321diff",
+//     email: "d@gmail.com",
+// });
 
-newperson2.save();
-newperson3.save();
-newperson4.save();
+// newperson2.save();
+// newperson3.save();
+// newperson4.save();
 
 /**
  * some query functions that needs to be written:
@@ -483,7 +483,7 @@ app.post("/", urlencodedParser, function (req, res) {
     // var username = req.query.username;
     //testing:
     var username = "ipadair";
-
+    var deadline = req.body.deadline;
     var title = req.body.title;
     var description = req.body.desc;
     // var ddl = req.query.deadline;
@@ -491,7 +491,7 @@ app.post("/", urlencodedParser, function (req, res) {
     var newTask = new Todo({
         title: title,
         desc: description,
-        deadline: "",
+        deadline: deadline,
         currDate: now,
     });
     User.findOne( { 
@@ -519,16 +519,55 @@ app.post("/", urlencodedParser, function (req, res) {
   
 });
 
-app.delete("/:task", function (req, res) {
-  res.render("views/index", { tasks: tasks });
-//   tasks = tasks.filter(function (todo) {
-//     return todo.item.replace(/ /g, "-") !== req.params.item;
-//   });
+app.post("/delete/:username/:title", function (req, res) {
+    var username = req.params.username;
+    var title = req.params.title;
+    console.log(username);
+    console.log(title);
+    User.findOneAndUpdate( { 
+    name: username
+    }, 
+    {$pull: {currentTodos: {title: title}}},
+    (err, person) => {
+        if (err) {
+            res.redirect('/' + '?' + 'username=' + person.name);
+            console.log("error in  deleting task");
+        } else if (!person) {
+            res.redirect('/' + '?' + 'username=' + person.name);
+            console.log("no such person, error in getting user info");
+        } else {
+            res.redirect('/' + '?' + 'username=' + person.name);
+            console.log("succeeded in deleting task and saving, redirects to index");
+        }
+    } );
+    // res.render("views/index", { tasks: tasks });
+    // tasks = tasks.filter(function (todo) {
+    // return todo.item.replace(/ /g, "-") !== req.params.item;
+
 });
 
 // This just sends back a message for any URL path not covered above
 app.use('/', (req, res) => {
-    res.json(alldata);
+    // var username = req.query.username;
+    //testing:
+    var username = "ipadair";
+
+    var tasks = [];
+    User.findOne( { 
+        name: username
+    }, 
+    (err, person) => {
+        if (err) {
+            console.log("error in getting task");
+            res.render("views/index", { tasks: tasks });
+        } else if (!person) {
+            console.log("error in getting the person");
+            res.render("views/index", { tasks: tasks });
+        } else {
+            tasks = person.currentTodos;
+            res.render("views/index", { tasks: tasks });
+        }
+    } );
 });
 
 // This starts the web server on port 3000. 

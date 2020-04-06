@@ -36,26 +36,7 @@ app.use(passport.session());
 app.use(methodOverride("_method"));
 
 var currid = 0;
-//definition of the Task class -- DO NOT CHANGE IT!
-var tasks = [
-  {
-    title: "run laps",
-    desc:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque egestas congue quisque egestas. ",
-  },
-  {
-    title: "finish CIS350",
-    desc:
-      "Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Nunc congue nisi vitae suscipit tellus mauris a diam.",
-  },
-  { title: "play Zelda", desc: "..." },
-  {
-    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    desc: "",
-  },
-  { title: "sed do eiusmod tempor incididunt ut", desc: "" },
-  { title: "abore et dolore", desc: "no desc" },
-];
+
 //middleware to run in post request
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 

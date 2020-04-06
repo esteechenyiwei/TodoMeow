@@ -89,6 +89,17 @@
               id="exampleFormControlInput1"
               placeholder="enter description"
             ></textarea>
+            
+          </div>
+          <div class="form-group">
+            <textarea
+              type="text"
+              name="deadline"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder="enter deadline"
+            ></textarea>
+            
           </div>
           <button
             type="submit"
@@ -106,14 +117,23 @@
     <div class="list">
       <% for(var i=0; i < tasks.length; i++) { %>
       <label>
+        
         <input type="checkbox" name="" />
         <i></i>
-        <span><%= tasks[i].title %></span>
+        <form action="/delete/ipadair/<%= tasks[i].title %>" method="POST">
+        <span>
+          <%= tasks[i].title %>  
+            
+          <input type="submit" class="btn-sm btn-outline-light" value=" X " >  
+          </form>
+        </span>
         <p><%= tasks[i].desc %></p>
+
+
       </label>
+
       <%}%>
     </div>
 
-    <script src="js/scripts.js"></script>
   </body>
 </html>
