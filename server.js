@@ -312,7 +312,7 @@ app.use('/loginandroid', (req, res) => {
             res.json({'status': 'error'});
             console.log(err);
         } else {
-            res.json([{'status': 'success'}, product]);
+            res.json({'status': 'success'});
 
         };
     });
@@ -483,58 +483,58 @@ app.use('/deletetask', (req, res) => {
  */
 
 
-app.get("/", checkAuthenticated, function (req, res) {
-    res.render("views/index", { tasks: tasks});
-  });
+// app.get("/", checkAuthenticated, function (req, res) {
+//     res.render("views/index", { tasks: tasks});
+//   });
   
-  app.get("/login", checkNotAuthenticated, function(req, res) {
-    res.render("views/login");
-  });
+//   app.get("/login", checkNotAuthenticated, function(req, res) {
+//     res.render("views/login");
+//   });
   
-  app.post("/login", checkNotAuthenticated, passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
+//   app.post("/login", checkNotAuthenticated, passport.authenticate("local", {
+//     successRedirect: "/",
+//     failureRedirect: '/login',
+//     failureFlash: true
+//   }));
   
-  app.get("/register", checkNotAuthenticated, function(req, res) {
-    res.render("views/register");
-  });
+//   app.get("/register", checkNotAuthenticated, function(req, res) {
+//     res.render("views/register");
+//   });
   
-  app.post("/register", checkNotAuthenticated, async function(req, res){
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      users.push({
-        id: Date.now().toString(),
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword
-      })
-      res.redirect("/login")
-    } catch {
-      res.redirect('/register')
-    }
-    console.log(users);
-  });
+//   app.post("/register", checkNotAuthenticated, async function(req, res){
+//     try {
+//       const hashedPassword = await bcrypt.hash(req.body.password, 10);
+//       users.push({
+//         id: Date.now().toString(),
+//         name: req.body.name,
+//         email: req.body.email,
+//         password: hashedPassword
+//       })
+//       res.redirect("/login")
+//     } catch {
+//       res.redirect('/register')
+//     }
+//     console.log(users);
+//   });
 
-  app.delete("/logout", function(req, res) {
-    req.logOut();
-    res.redirect("/login");
-  })
+//   app.delete("/logout", function(req, res) {
+//     req.logOut();
+//     res.redirect("/login");
+//   })
   
-  function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    } 
-    res.redirect("/login");
-  }
+//   function checkAuthenticated(req, res, next) {
+//     if (req.isAuthenticated()) {
+//       return next();
+//     } 
+//     res.redirect("/login");
+//   }
   
-  function checkNotAuthenticated(req, res, next){
-    if (req.isAuthenticated()){
-      return res.redirect("/");
-    }
-    next();
-  }
+//   function checkNotAuthenticated(req, res, next){
+//     if (req.isAuthenticated()){
+//       return res.redirect("/");
+//     }
+//     next();
+//   }
 
 /**
  * 
@@ -545,7 +545,7 @@ app.get("/", checkAuthenticated, function (req, res) {
 //middleware to run in post request
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-app.get("/", checkAuthenticated, function (req, res) {
+app.get("/", function (req, res) {
     // var username = req.query.username;
     //testing:
     var username = "ipadair";

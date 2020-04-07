@@ -6,7 +6,7 @@ public class LoginDataSource {
 
     public static String getUserStatus(String inputusername, String inputpassword) {
         try {
-            URL url = new URL("http://10.0.2.2:3000/login?username="
+            URL url = new URL("http://10.0.2.2:3000/loginandroid?username="
                     + inputusername + "&password=" + inputpassword);
             LoginAccessWebTask task = new LoginAccessWebTask();
             task.execute(url);
@@ -20,7 +20,7 @@ public class LoginDataSource {
 
     public static String signUpUser(String inputusername, String inputemail, String inputpassword) {
         try {
-            URL url = new URL("http://10.0.2.2:3000/signup?username="
+            URL url = new URL("http://10.0.2.2:3000/signupandroid?username="
                     + inputusername + "&email=" + inputemail + "&password=" + inputpassword);
             LoginAccessWebTask task = new LoginAccessWebTask();
             task.execute(url);
@@ -35,7 +35,7 @@ public class LoginDataSource {
     public static String changePassword(String inputusername, String inputpassword1,
                                         String inputpassword2) {
         try {
-            URL url = new URL("http://10.0.2.2:3000/changepassword?username="
+            URL url = new URL("http://10.0.2.2:3000/changepasswordandroid?username="
                     + inputusername + "&oldpassword=" + inputpassword1
                     + "&newpassword=" + inputpassword2);
             LoginAccessWebTask task = new LoginAccessWebTask();

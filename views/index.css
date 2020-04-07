@@ -88,6 +88,11 @@ body {
   transition: transform 0.5s; 
 } */
 
+#but {
+  background-color: #f1e4da;
+  border-color: #f1e4da;
+}
+
 .list input[type="checkbox"]:checked ~ span {
   text-decoration: line-through;
 }

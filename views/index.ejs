@@ -118,13 +118,14 @@
       <% for(var i=0; i < tasks.length; i++) { %>
       <label>
         
-        <input type="checkbox" name="" />
-        <i></i>
+        
         <form action="/delete/ipadair/<%= tasks[i].title %>" method="POST">
+          <input type="checkbox" name="" />
+          <i></i>
         <span>
           <%= tasks[i].title %>  
             
-          <input type="submit" class="btn-sm btn-outline-light" value=" X " >  
+          <input type="submit" id= "but" class="btn-sm btn-outline-light" value="X"}>  
           </form>
         </span>
         <p><%= tasks[i].desc %></p>
