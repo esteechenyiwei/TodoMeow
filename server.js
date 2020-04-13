@@ -93,7 +93,7 @@ mongoose.connection.on('error', err => {
 
 var todoSchema = new Schema({
     title: {type: String, required: true},
-    desc: {type: String, required: true},
+    desc: {type: String, default: ""},
     completed: {type: Boolean, default: false},
     deadline: {type: String, default: ""},
     creationDate: {type: Date, default: null},
@@ -129,7 +129,7 @@ var userSchema = new Schema(
         currentTodos: {type: [todoSchema], default: []},
         missedTodos: {type: [todoSchema], default: []},
         completedTodos: {type: [todoSchema], default: []},
-        todosCompleted: {type: Number, min: 0, default: 0},
+        numCompleted: {type: Number, min: 0, default: 0},
         //create a pet schema in-place
         pet: new Schema({
             name: {type: String, default: "Meow"},
@@ -614,10 +614,20 @@ app.post("/delete/:username/:title", function (req, res) {
     var title = req.params.title;
     console.log(username);
     console.log(title);
+    var newTask = new Todo({
+        title: title,
+        desc: description,
+        deadline: deadline,
+        currDate: now,
+    });
     User.findOneAndUpdate( { 
     name: username
     }, 
-    {$pull: {currentTodos: {title: title}}},
+    {$and: [
+        {$pull: {currentTodos: {title: title}}},
+        {$inc: {numCompleted: 1}},
+        {$push: {completedTodos: newTask}}
+    ]},
     (err, person) => {
         if (err) {
             res.redirect('/');
@@ -629,7 +639,8 @@ app.post("/delete/:username/:title", function (req, res) {
             res.redirect('/');
             console.log("succeeded in deleting task and saving, redirects to index");
         }
-    } );
+    });
+    
 
 
 });
