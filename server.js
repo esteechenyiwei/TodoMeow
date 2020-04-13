@@ -454,10 +454,17 @@ app.use('/addtask', (req, res) => {
 app.use('/deletetask', (req, res) => {
     var username = req.query.username;
     var title = req.query.title;
+    var newTask = new Todo({
+        title: title,
+    });
     User.findOneAndUpdate( { 
         name: username
     }, 
-    {$pull: {currentTodos: {title: title}}},
+    {$and: [
+        {$pull: {currentTodos: {title: title}}},
+        {$inc: {numCompleted: 1}},
+        {$push: {completedTodos: newTask}}
+    ]},
     (err, person) => {
         if (err) {
             res.json( { 
@@ -476,6 +483,40 @@ app.use('/deletetask', (req, res) => {
         }
     } );
 });
+
+/**
+ * 
+ * Iteration 2: Android -> get the number of completed tasks
+ */
+
+app.use('/getnumcompleted', (req, res) => {
+    var username = req.query.username;
+    User.findOne( { 
+        name: username
+    }, 
+    (err, person) => {
+        if (err) {
+            res.json( { 
+                'status' : 'error',
+                'message': 'dbError'
+            } );
+            console.log("error in adding task");
+        } else if (!person) {
+            res.json( { 
+                'status' : 'error',
+                'message': 'no such person'
+            });
+
+        } else {
+            res.json({
+                'status': 'success',
+                'message': person.numCompleted
+            });
+
+        }
+    } );
+})
+
 
 /**
  * 
@@ -668,6 +709,24 @@ app.use('/', (req, res) => {
         }
     } );
 });
+
+
+/**
+ * 
+ * Iteration 2: web -> rank the users by the # of tasks completed
+ */
+
+app.use('/getrankbytasks', (req, res) => {
+    var username = req.query.username;
+    User.find({}).sort({ numCompleted: -1}).exec().addBack((err, docs) => {
+        if (err) {
+            console.log("error occurred during getting ranks by tasks");
+        } else {
+            res.json(docs);
+        }
+    });
+})
+
 
 // This starts the web server on port 3000. 
 app.listen(3000, () => {
