@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+
+  <title>TodoMoew</title>
+  <script src="https://code.jquery.com/jquery-1.12.3.min.js"
+    integrity="sha384-ugqypGWrzPLdx2zEQTF17cVktjb01piRKaDNnbYGRSxyEoeAm+MKZVtbDUYjxfZ6"
+    crossorigin="anonymous"></script>
+  <meta name="description" content="a Todo App to Collect Cats" />
+  <meta name="author" content="BBBB" />
+
+  <link rel="stylesheet" href="index.css" type="text/css" />
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(241, 228, 218, 0.4);">
+    <a class="navbar-brand" href="#">ToDoMoew</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/tasks">Tasks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Cats</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/rankings">Rankings <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <form action="/logout?_method=DELETE" method="POST">
+            <button type="submit btn-info">Log Out</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="jumbotron">
+    <div class="mx-auto" style="width: 50%;">
+      <h1 class="display-4">TodoMoew</h1>
+      <p class="lead">
+        Rankings
+      </p>
+      <hr class="my-4" />
+    </div>
+  </div>
+
+  <div class="list">
+    <% for(var i=0; i < rankings.length; i++) { %>
+    <label>
+      <h4 class="ml-4"><%= i+1%>.
+        <strong><%= rankings[i].name %></strong></h4>
+      <span># Tasks finished: <%= rankings[i].numTasks %></span>
+    </label>
+    <%}%>
+    </div>
+
+    <script src="js/scripts.js"></script>
+  </body>
+</html>

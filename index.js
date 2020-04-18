@@ -60,11 +60,44 @@ var tasks = [
   { title: "sed do eiusmod tempor incididunt ut", desc: "" },
   { title: "abore et dolore", desc: "no desc" },
 ];
+
+var rankings = [
+  {
+    name: "Chris",
+    numTasks: 300,
+  },
+  {
+    name: "Estee",
+    numTasks: 350,
+  },
+  {
+    name: "Kitty",
+    numTasks: 2,
+  },
+  {
+    name: "Piggy",
+    numTasks: 8,
+  },
+];
+
+//sort tasks by numTasks
+rankings = rankings.sort(function (a, b) {
+  return b.numTasks - a.numTasks;
+});
+console.log(rankings);
 //middleware to run in post request
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-app.get("/", checkAuthenticated, function (req, res) {
+app.get("/", checkNotAuthenticated, function (req, res) {
   res.render("views/index", { tasks: tasks });
+});
+
+app.get("/tasks", checkNotAuthenticated, function (req, res) {
+  res.render("views/index", { tasks: tasks });
+});
+
+app.get("/rankings", checkNotAuthenticated, function (req, res) {
+  res.render("views/rankings", { rankings: rankings });
 });
 
 app.get("/login", checkNotAuthenticated, function (req, res) {
