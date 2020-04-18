@@ -84,7 +84,6 @@ var rankings = [
 rankings = rankings.sort(function (a, b) {
   return b.numTasks - a.numTasks;
 });
-console.log(rankings);
 //middleware to run in post request
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -94,6 +93,12 @@ app.get("/", checkNotAuthenticated, function (req, res) {
 
 app.get("/tasks", checkNotAuthenticated, function (req, res) {
   res.render("views/index", { tasks: tasks });
+});
+
+app.get("/task", checkNotAuthenticated, function (req, res) {
+  var title = req.query.title;
+  var desc = req.query.desc;
+  res.render("views/task", { title: title, desc: desc });
 });
 
 app.get("/rankings", checkNotAuthenticated, function (req, res) {

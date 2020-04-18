@@ -32,7 +32,7 @@ body {
   overflow-wrap: break-word;
 }
 
-.list label:hover {
+.list button:hover {
   background: rgba(0, 0, 0, 0.1);
 }
 

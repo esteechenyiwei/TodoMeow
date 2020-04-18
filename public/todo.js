@@ -1,21 +1,21 @@
 //handle ajax request to post/delete items
-$(document).ready(function() {
-  $("form").on("submit", function() {
-    var task = $("form input");
-    var todo = { task: task.val() };
+// $(document).ready(function() {
+//   $("form").on("submit", function() {
+//     var task = $("form input");
+//     var todo = { task: task.val() };
 
-    $.ajax({
-      type: "POST",
-      url: "/",
-      data: todo,
-      success: function(data) {
-        //do something with the data via front-end framework
-        location.reload();
-      }
-    });
+//     $.ajax({
+//       type: "POST",
+//       url: "/",
+//       data: todo,
+//       success: function(data) {
+//         //do something with the data via front-end framework
+//         location.reload();
+//       }
+//     });
 
-    return false;
-  });
+//     return false;
+//   });
 
   $("li").on("click", function() {
     var item = $(this)
