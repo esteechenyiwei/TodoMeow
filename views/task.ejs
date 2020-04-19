@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/tasks">
+                    <a class="nav-link" href="/dashboard">
                         Tasks <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
@@ -39,9 +39,7 @@
                     <a class="nav-link" href="/rankings">Rankings</a>
                 </li>
                 <li class="nav-item">
-                    <form action="/logout?_method=DELETE" method="POST">
-                        <button type="submit" class=" btn btn-info pawBtn">Log Out</button>
-                    </form>
+                    <a href="/users/logout" class="btn btn-secondary">Logout</a>
                 </li>
             </ul>
         </div>
@@ -57,7 +55,7 @@
         </div>
     </div>
     <div class="list my-4 py-4">
-        <form id="form input" method="POST" action="/">
+        <form id="form input" method="POST" action="/dashboard">
             <div class="form-group my-4">
                 <input type="text" name="title" value="<%= title %>" class="form-control"
                     style="background-color: rgba(255, 255, 255, 0.4);" id="exampleFormControlInput1" />
