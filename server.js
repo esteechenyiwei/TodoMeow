@@ -241,10 +241,11 @@ User.find().exec((err, res) => {
 //     password: "87654321Ui",
 //     email: "c@gmail.com",
 // });
+
 // var newperson4 = new User({
-//     name: "applewatch",   
-//     password: "87654321diff",
-//     email: "d@gmail.com",
+//     name: "pqy",   
+//     password: "233",
+//     email: "pqy@seas.upenn.edu",
 // });
 
 // newperson2.save();
@@ -576,22 +577,39 @@ app.get("/", checkAuthenticated, function (req, res) {
     }
     next();
   }
-
+    var tasks = [
+  {
+    title: "run laps",
+    desc:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque egestas congue quisque egestas. ",
+  },
+  {
+    title: "finish CIS350",
+    desc:
+      "Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Nunc congue nisi vitae suscipit tellus mauris a diam.",
+  },
+  { title: "play Zelda", desc: "yeah" }
+];
 /**
  * 
  * Iteration 1: Web App Handle Tasks
  */
  
+app.get("/tasks", checkNotAuthenticated, function (req, res) {
+  res.render("views/index", { tasks: tasks });
+});
 
 //middleware to run in post request
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
 
 app.get("/", checkAuthenticated, function (req, res) {
     // var username = req.query.username;
     //testing:
     var username = "ipadair";
 
-    var tasks = [];
+    //var tasks = [];
+
     User.findOne( { 
         name: username
     }, 
@@ -613,7 +631,7 @@ app.get("/", checkAuthenticated, function (req, res) {
 app.post("/", urlencodedParser, function (req, res) {
     // var username = req.query.username;
     //testing:
-    var username = "ipadair";
+    var username = "pqy";
     var deadline = req.body.deadline;
     var title = req.body.title;
     var description = req.body.desc;
@@ -649,6 +667,55 @@ app.post("/", urlencodedParser, function (req, res) {
     } );
   
 });
+//edit task
+app.get("/task", checkNotAuthenticated, function (req, res) {
+    var title = req.query.title;
+    var desc = req.query.desc;
+    //delete the unedited task
+    var tasks = tasks;
+//   (cleaner = function (object, title) {
+//     Object.keys(object).forEach(function (k) {
+//       var temp = object[k].filter(function (a) {
+//         return a.title !== title;
+//       });
+//       if (object[k].length !== temp.length) {
+//         object[k] = temp;
+//       }
+//     });
+
+//     cleaner(users, title);
+    res.render("views/task", { title: title, desc: desc });
+});
+
+
+var rankings = [
+  {
+    name: "Chris",
+    numTasks: 300,
+  },
+  {
+    name: "Estee",
+    numTasks: 350,
+  },
+  {
+    name: "Kitty",
+    numTasks: 2,
+  },
+  {
+    name: "Piggy",
+    numTasks: 8,
+  },
+];
+
+app.get("/rankings", checkNotAuthenticated, function (req, res) {
+    //sort tasks by numTasks
+    rankings = rankings.sort(function (a, b) {
+    return b.numTasks - a.numTasks;
+    });    
+  res.render("views/rankings", { rankings: rankings });
+});
+
+
 
 app.post("/delete/:username/:title", function (req, res) {
     var username = req.params.username;
