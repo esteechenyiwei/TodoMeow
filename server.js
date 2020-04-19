@@ -577,36 +577,44 @@ app.get("/", checkAuthenticated, function (req, res) {
     }
     next();
   }
-    var tasks = [
-  {
-    title: "run laps",
-    desc:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque egestas congue quisque egestas. ",
-  },
-  {
-    title: "finish CIS350",
-    desc:
-      "Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean. Nunc congue nisi vitae suscipit tellus mauris a diam.",
-  },
-  { title: "play Zelda", desc: "yeah" }
-];
 /**
  * 
  * Iteration 1: Web App Handle Tasks
  */
  
 app.get("/tasks", checkNotAuthenticated, function (req, res) {
-  res.render("views/index", { tasks: tasks });
+      // var username = req.query.username;
+    //testing:
+    var username = "pqy";
+
+    //var tasks = [];
+
+    User.findOne( { 
+        name: username
+    }, 
+    (err, person) => {
+        if (err) {
+            console.log("error in getting task");
+            res.render("views/index", { tasks: tasks });
+        } else if (!person) {
+            console.log("error in getting the person");
+            res.render("views/index", { tasks: tasks });
+        } else {
+            tasks = person.currentTodos;
+            res.render("views/index", { tasks: tasks });
+        }
+    } );
+
 });
 
 //middleware to run in post request
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 
-app.get("/", checkAuthenticated, function (req, res) {
+app.get("/", checkNotAuthenticated, function (req, res) {
     // var username = req.query.username;
     //testing:
-    var username = "ipadair";
+    var username = "pqy";
 
     //var tasks = [];
 
@@ -648,7 +656,6 @@ app.post("/", urlencodedParser, function (req, res) {
     }, 
     (err, person) => {
         if (err) {
-
             console.log("error in adding task");
         } else if (!person) {
             console.log("no such person, error in getting user info");
@@ -716,6 +723,21 @@ app.get("/rankings", checkNotAuthenticated, function (req, res) {
 });
 
 
+app.get("/remove", checkNotAuthenticated, function (req, res) {
+    //var title = req.query.title;
+        (err, person) => {
+        if (err) {
+            res.redirect('/');
+            console.log("error in  deleting task");
+        } else if (!person) {
+            res.redirect('/');
+            console.log("no such person, error in getting user info");
+        } else {
+                db.collection.remove({title: "tweet1"});
+            res.redirect('/');
+            console.log("succeeded in deleting task and saving, redirects to index");
+        }
+    }});
 
 app.post("/delete/:username/:title", function (req, res) {
     var username = req.params.username;
@@ -757,7 +779,7 @@ app.post("/delete/:username/:title", function (req, res) {
 app.use('/', (req, res) => {
     // var username = req.query.username;
     //testing:
-    var username = "ipadair";
+    var username = "pqy";
 
     var tasks = [];
     User.findOne( { 
