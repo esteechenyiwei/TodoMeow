@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="#EA8C55"
-        android:layout_height="198dp">
+        android:layout_height="100dp">
 
         <TextView
             android:id="@+id/titlepage"
@@ -35,7 +35,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:background="@drawable/bgitemtask"
-        android:paddingTop="22dp"
+        android:paddingTop="2dp"
         android:paddingBottom="22dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

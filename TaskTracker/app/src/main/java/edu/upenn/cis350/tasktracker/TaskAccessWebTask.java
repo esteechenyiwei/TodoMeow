@@ -36,7 +36,9 @@ public class TaskAccessWebTask extends AsyncTask<URL, String, ArrayList<Task>> {
                 JSONObject task = (JSONObject) data.get(i);
                 String title = (String) task.get("title");
                 String desc = (String) task.get("desc");
-                String deadline = (String) task.get("deadline");
+                //iter 2: 紧急救援措施
+//                String deadline = (String) task.get("deadline");
+                String deadline = "tomorrow";
                 Task j = new Task(title, desc, deadline);
                 t.add(j);
             }
