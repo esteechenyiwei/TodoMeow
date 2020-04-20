@@ -6,7 +6,7 @@ var todoSchema = new Schema({
   title: { type: String, required: true },
   desc: { type: String, default: "" },
   completed: { type: Boolean, default: false },
-  deadline: { type: String, default: "" },
+  deadline: { type: Date, default: null },
   creationDate: { type: Date, default: null },
 });
 
@@ -55,6 +55,7 @@ var userSchema = new Schema({
     health: { type: Number, default: 10 },
     appearance: { type: String, default: "" },
   }),
+  petLevel: { type: Number, min: 0, default: 0 },
   myFoods: { type: [foodSchema], default: [] },
 });
 
@@ -73,5 +74,6 @@ exports.getUser = function() {
 exports.getFood = function() {
   return Food;
 }
+
 
 

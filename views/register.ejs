@@ -1,3 +1,4 @@
+<!--
 <div class="row mt-5">
   <div class="col-md-6 m-auto">
     <div class="card card-body">
@@ -58,3 +59,33 @@
     </div>
   </div>
 </div>
+
+-->
+
+
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Register</title>
+  <link rel="stylesheet" href="register.css">
+</head>
+
+<body>
+  <form class="box" action="/users/register" method="POST">
+    <h1>Register</h1>
+    <input type="text" id="name" name="name" placeholder="Name" required>
+    <input type="email" id="email" name="email" placeholder="Email" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    <input type="password" id="password2" name="password2" placeholder="Confirm Password" required>
+    <input type="submit" name="Register" value="Register">
+    <h2>Have an Account?</h2> <a href="/users/login">Login</a>
+  </form>
+
+</body>
+
+</html>
+
+
