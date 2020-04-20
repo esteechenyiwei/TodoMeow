@@ -415,7 +415,7 @@ app.use('/edittask', (req, res) => {
     } );
 });
 
-app.use("/deletetask", (req, res) => {
+app.use("/delete", (req, res) => {
   var username = req.query.username;
   var title = req.query.title;
   var newTask = new Todo({
@@ -675,25 +675,6 @@ app.post("/dashboard", urlencodedParser, function (req, res) {
   
 });
 
-//edit task
-app.get("/task", ensureAuthenticated, function (req, res) {
-  var title = req.query.title;
-  var desc = req.query.desc;
-  //delete the unedited task
-  var tasks = tasks;
-  //   (cleaner = function (object, title) {
-  //     Object.keys(object).forEach(function (k) {
-  //       var temp = object[k].filter(function (a) {
-  //         return a.title !== title;
-  //       });
-  //       if (object[k].length !== temp.length) {
-  //         object[k] = temp;
-  //       }
-  //     });
-
-  //     cleaner(users, title);
-  res.render("task", { title: title, desc: desc });
-});
 
 //get rankings: db + http request & response 
 app.get("/rankings", ensureAuthenticated, function (req, res) {
@@ -708,11 +689,7 @@ app.get("/rankings", ensureAuthenticated, function (req, res) {
         console.log("success, users ranking is:" + docs);
         res.render("rankings", { rankings: docs });
 
-<<<<<<< HEAD
-    }}).sort([["pet.level","desc"]]); 
-=======
     }}).sort([['numCompleted',"desc"]]); 
->>>>>>> ea149725d1a7678619133096c7588495ffccc7e1
   
 });
 
@@ -808,22 +785,6 @@ app.use("/getrankbytasks", (req, res) => {
       }
     });
 });
-
-/**
- * 
- * Iteration 2: web -> rank the users by the level of his cat
- */
-
-app.use('/getrankbytasks', (req, res) => {
-    var username = req.query.username;
-    User.find({}).sort({ numCompleted: -1}).exec().addBack((err, docs) => {
-        if (err) {
-            console.log("error occurred during getting ranks by tasks");
-        } else {
-            res.json(docs);
-        }
-    });
-})
 
 const PORT = process.env.PORT || 3000;
 
