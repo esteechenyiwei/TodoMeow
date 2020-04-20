@@ -28,14 +28,13 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">Tasks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/catrankings">Cats<span class="sr-only">(current)</span></a>
+        </li>
         <li class="nav-item active">
-          <a class="nav-link" href="/dashboard">
-            Tasks <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="catrankings">Cats</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="/rankings">Rankings</a>
         </li>
         <li class="nav-item">
@@ -49,60 +48,28 @@
     <div class="mx-auto" style="width: 50%;">
       <h1 class="display-4">TodoMoew</h1>
       <p class="lead">
-        Get your tasks done with cats!
+        Rankings by Cat Level
       </p>
       <hr class="my-4" />
-      <form id="form input" method="POST" action="/dashboard">
-        <div class="form-group">
-          <input type="text" name="title" class="form-control" id="exampleFormControlInput1"
-            placeholder="enter task name" />
-        </div>
-        <div class="form-group">
-          <textarea rows="3" type="text" name="desc" class="form-control" id="exampleFormControlInput1"
-            placeholder="enter description"></textarea>
-
-        </div>
-        <div class="form-group">
-          <textarea type="text" name="deadline" class="form-control" id="exampleFormControlInput1"
-            placeholder="enter deadline"></textarea>
-
-        </div>
-        <button type="submit" class="btn btn-info btn-lg pawBtn" href="#" role="button">
-          ADD
-        </button>
-        <!-- <button type="submit">Add</button> -->
-      </form>
     </div>
   </div>
 
   <div class="list">
-    <% for(var i=tasks.length-1; i >= 0; i--) { %>
+    <% for(var i=0; i < catrankings.length; i++) { %>
     <label>
-      <form action="/task" method="get">
-        <input type="checkbox" name="" />
-        <i></i>
-        <input name="title" value="<%= tasks[i].title%>" type="hidden">
-        <input name="desc" value="<%= tasks[i].desc%>" type="hidden">
-        <span><%= tasks[i].title%></input></span>
-        <p><%= tasks[i].desc %>
-          <br>
-          <button type="submit" class="text-muted btn float-right mb-4 nav-item" href="#" role="button">
-            Edit
-          </button></p>
-        <br>
-      </form>
+      <h4 class="ml-4"><%= i+1%>.
+        <strong><%= catrankings[i].name %></strong></h4>
+      <span>Cat Level: <%= catrankings[i].petLevel %></span>
     </label>
-    <hr class="my-1" />
     <%}%>
     </div>
-
-
-
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    <script src="js/scripts.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
   integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
   integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
   </body>
 </html>

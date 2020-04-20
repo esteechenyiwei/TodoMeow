@@ -22,7 +22,7 @@
  */
 
 const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
+//const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
@@ -60,7 +60,7 @@ mongoose.connect(db, { useNewUrlParser: true })
   .catch(err => console.log(err));
 
 // EJS
-app.use(expressLayouts);
+//app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 // Express body parser
@@ -708,24 +708,28 @@ app.get("/rankings", ensureAuthenticated, function (req, res) {
         console.log("success, users ranking is:" + docs);
         res.render("rankings", { rankings: docs });
 
+<<<<<<< HEAD
     }}).sort([["pet.level","desc"]]); 
+=======
+    }}).sort([['numCompleted',"desc"]]); 
+>>>>>>> ea149725d1a7678619133096c7588495ffccc7e1
   
 });
 
 //get rankings:(vivian in charge)
-app.get("/rankingsbycatlevel", ensureAuthenticated, function (req, res) {
+app.get("/catrankings", ensureAuthenticated, function (req, res) {
 
     let catrankings = [{name: "loading, prob some error occured", level: 0 }];
   
     User.find({}, (err, docs) => {
       if (err) {
-          console.log("error occurred during getting ranks by tasks");
-          res.render("rankings", { rankings: rankings });
+          console.log("error occurred during getting ranks by cat level");
+          res.render("catrankings", { catrankings: catrankings });
       } else {
           console.log("success, users ranking is:" + docs);
-          res.render("rankings", { rankings: docs });
+          res.render("catrankings", { catrankings: docs });
   
-      }}).sort([[pet.level,"desc"]]); 
+      }}).sort([['pet.level',"desc"]]); 
     
   });
 
