@@ -1,68 +1,39 @@
 /**
- * Project: CIS 350 Group Project: 
- * Introduction of this file: 
- * This file is where the node express app is. This file creates a connection with the database, 
+ * Project: CIS 350 Group Project:
+ * Introduction of this file:
+ * This file is where the node express app is. This file creates a connection with the database,
  * creates the schema used for each class, and specifies the SchemaType and options for each property of each class.
- * It also implements functions to handle http requests sent by the Android and Web end.  
- * 
- * Major functions achieved: 
+ * It also implements functions to handle http requests sent by the Android and Web end.
+ *
+ * Major functions achieved:
  * 1. Creates, updates and removes documents from the MongoDB Cluster on requests.
- * 2. Returns a ordered list of top 10 users from the data base. 
+ * 2. Returns a ordered list of top 10 users from the data base.
  *
  *  @author Yiwei (Estee) Chen <estee813@seas.upenn.edu>
  *  @author Qingyuan Peng <pqy@seas.upenn.edu>
- *  @author Vivian Chiang 
+ *  @author Vivian Chiang
  */
-
- /**
-  * Note to users:
-  * 1. currently when creating accounts, two users can't have the same password.
-  * 2. Deadline is not required for iter 1.
-  * 
-  */
-
-var express = require('express');
-var app = express();
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var bodyParser = require("body-parser");
 
 /**
- * setup steps for the webapp
+ * Note to users:
+ * 1. currently when creating accounts, two users can't have the same password.
+ * 2. Deadline is not required for iter 1.
+ *
  */
-if (process.env.NODE_ENV !== "production"){
-    require("dotenv").config();
-  }
-  const bcrypt = require('bcrypt');
-  const passport = require('passport');
-  const flash = require("express-flash");
-  const session = require("express-session");
-  const methodOverride = require("method-override");
-  
-  const initializePassport = require('./passport-config');
-  initializePassport(
-    passport, 
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
-  );
-  
-  const users = [];
 
+const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash = require('connect-flash');
+const session = require('express-session');
+const bcrypt = require('bcryptjs');
+var bodyParser = require("body-parser");
 
-app.use(express.static(__dirname + "/views"));
-app.use(express.static(__dirname + "/public"));
-app.set("view engine", "ejs");
-app.set("views", __dirname);
-app.use(express.urlencoded({ extended: false}));
-app.use(flash());
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
-}))
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(methodOverride("_method"));
+const app = express();
+
+// Passport Config
+require('./config/passport')(passport);
 
 
 /**
@@ -72,83 +43,65 @@ app.use(methodOverride("_method"));
  * password: PSAMarketing
  */
 
-var cloudUrl = 'mongodb+srv://estee:PSAMarketing@cis350group33cluster-8lbyv.mongodb.net/test?retryWrites=true&w=majority';
-var localUrl = 'mongodb://localhost:27017';
+var cloudUrl =
+  "mongodb+srv://estee:PSAMarketing@cis350group33cluster-8lbyv.mongodb.net/test?retryWrites=true&w=majority";
+var localUrl = "mongodb://localhost:27017";
 
-mongoose.connect(localUrl, 
-{ useNewUrlParser: true }).
-  catch(error => handleError(error));
+/*
+Estee's account didn't work for me so I created a new one below (in ./config/keys); this one should work for everyone --Vivian
+ */
+ 
+// DB Config
+const db = require('./config/keys').mongoURI;
 
-var handleError = (err) => {
-    console.log("error occured trying to connect to Mongo"  + err);
-};
+// Connect to MongoDB
+mongoose.connect(db, { useNewUrlParser: true })
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
 
-mongoose.connection.on('error', err => {
-    console.log("error during connection" + err);
-  });
+// EJS
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
 
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
 
-
-//building Schemas
-
-var todoSchema = new Schema({
-    title: {type: String, required: true},
-    desc: {type: String, default: ""},
-    completed: {type: Boolean, default: false},
-    deadline: {type: String, default: ""},
-    creationDate: {type: Date, default: null},
-});
-
-var foodSchema = new Schema({
-    name: {type: String, required: true},
-    cost: {type: Number, required: true, min: 0},
-    function: {type: String, required: true},
-    boosts: {type: Number, min: 0, required: true},
-});
-
-
-var userSchema = new Schema(
-    {
-        name: {type: String, required: true, unique: true},
-        
-        password: {type: String, 
-            required: true,
-            validator: [(val) => { return ("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/".test(val)); }, 
-                         "password must be between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"],
-            unique: false,
-        },
-        // profilePictureUrl: String, (might implement in the future if got time)
-        email: {
-            type: String, 
-            required: true, 
-            unique: true, 
-            validate: [(val) => { return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val)); }, 
-                        "invalid email"],
-        },
-        money: {type: Number, min: 0, default: 0},
-        currentTodos: {type: [todoSchema], default: []},
-        missedTodos: {type: [todoSchema], default: []},
-        completedTodos: {type: [todoSchema], default: []},
-        numCompleted: {type: Number, min: 0, default: 0},
-        //create a pet schema in-place
-        pet: new Schema({
-            name: {type: String, default: "Meow"},
-            level: {type: Number, min: 0, default: 0},
-            health: {type: Number, default: 10},
-            appearance: {type: String, default: ""},
-        }),
-        myFoods: {type: [foodSchema], default: []},
-    }
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
 );
 
- var Todo = mongoose.model('Todo', todoSchema);
- var Food = mongoose.model('Food', foodSchema);
- var User = mongoose.model('User', userSchema);
+//Import Schemas
+var schemas = require("./models/Schemas");
+var User = schemas.getUser();
+var Todo = schemas.getTodo();
+var Food = schemas.getFood();
 
+//var Todo = require("./models/User");
+//var Food = require("./models/User");
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect flash
+app.use(flash());
+
+// Global variables
+app.use(function(req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 /**
  * create some data for testing purpose
- * 
+ *
  */
 
 /**
@@ -163,46 +116,51 @@ var userSchema = new Schema(
 //     }
 // });
 
- //test todo data
- var testtodolist = [{
+//test todo data
+var testtodolist = [
+  {
     desc: "by tomorrow",
     title: "hw1",
-    creationDate: new Date()
-}, 
-{
+    creationDate: new Date(),
+  },
+  {
     desc: "by monday",
     title: "hw2",
-    creationDate: new Date()
-}, 
-{
+    creationDate: new Date(),
+  },
+  {
     desc: "by 4.9",
     title: "hw3",
-    creationDate: new Date()
-},{
+    creationDate: new Date(),
+  },
+  {
     desc: "by 4.13",
     title: "hw4",
-    creationDate: new Date()
-},{
+    creationDate: new Date(),
+  },
+  {
     desc: "by 5.1",
     title: "hw5",
-    creationDate: new Date()
-}, 
-{
+    creationDate: new Date(),
+  },
+  {
     desc: "by 4.31",
     title: "hw6",
-    creationDate: new Date()
-},{
+    creationDate: new Date(),
+  },
+  {
     desc: "by 5.2",
     title: "hw7",
-    creationDate: new Date()
-}]
+    creationDate: new Date(),
+  },
+];
 
 /**
  * add some users
  */
 
 // var newperson1 = new User({
-//     name: "ipadair",   
+//     name: "ipadair",
 //     password: "1239248Aa",
 //     email: "a@gmail.com",
 // });
@@ -222,29 +180,30 @@ var userSchema = new Schema(
 //testing
 var alldata;
 User.find().exec((err, res) => {
-    if (err) {
-        console.log("error in outputting all" + err);
-    } else {
-        alldata = res;
-        console.log("all docs in User: " + res);
-    }
+  if (err) {
+    console.log("error in outputting all" + err);
+  } else {
+    alldata = res;
+    console.log("all docs in User: " + res);
+  }
 });
 
-// var newperson2 = new User({
-//     name: "ipadpro",   
-//     password: "uopelrnmJ90",
-//     email: "b@gmail.com",
-// });
+var newperson2 = new User({
+    name: "ipadpro",
+    password: "uopelrnmJ90",
+    email: "b@gmail.com",
+});
 
 // var newperson3 = new User({
-//     name: "macbook",   
+//     name: "macbook",
 //     password: "87654321Ui",
 //     email: "c@gmail.com",
 // });
+
 // var newperson4 = new User({
-//     name: "applewatch",   
-//     password: "87654321diff",
-//     email: "d@gmail.com",
+//     name: "pqy",
+//     password: "233",
+//     email: "pqy@seas.upenn.edu",
 // });
 
 // newperson2.save();
@@ -266,354 +225,417 @@ User.find().exec((err, res) => {
  *  Login, create account, authentication -> Android
  */
 
-
-app.use('/loginandroid', (req, res) => {
-    var username = req.query.username;
-    var pw = req.query.password;
-    var email = req.query.email;
-    User.findOne( { name: username }, (err, person) => {
-        if (err) {
-            res.json( { 
-                'status' : 'error',
-                'message': 'dbError'
-            } );
-        } else if (!person) {
-            res.json( { 
-                'status' : 'error',
-                'message': 'username'
-            } );
-        } else {
-            if (person.password === pw) {
-                res.json( { 
-                    'status' : 'success',
-                    'message': ''
-                } );         
-            } else {
-                res.json( { 
-                    'status' : 'error',
-                    'message': 'password'
-                } );     
-            }
-        }
-    });
+app.use("/loginandroid", (req, res) => {
+  var username = req.query.username;
+  var pw = req.query.password;
+  var email = req.query.email;
+  User.findOne({ name: username }, (err, person) => {
+    if (err) {
+      res.json({
+        status: "error",
+        message: "dbError",
+      });
+    } else if (!person) {
+      res.json({
+        status: "error",
+        message: "username",
+      });
+    } else {
+      if (person.password === pw) {
+        res.json({
+          status: "success",
+          message: "",
+        });
+      } else {
+        res.json({
+          status: "error",
+          message: "password",
+        });
+      }
+    }
+  });
 });
 
- app.use('/signupandroid', (req, res) => {
-    var username = req.query.username;
-    var pw = req.query.password;
-    var email = req.query.email;
-    var newUser = new User({
-        name: username,
-        password: pw,
-        email: email,
-    });
-    newUser.save((err, product) => {
-        if (err) {
-            res.json({'status': 'error'});
-            console.log(err);
-        } else {
-            res.json({'status': 'success'});
-
-        };
-    });
-
- });
-
-app.use('/changepasswordandroid', (req, res) => {
-    var username = req.query.username;
-    var oldpw = req.query.oldpassword;
-    var newpw = req.query.newpassword;
-
-    User.findOneAndUpdate( { 
-        name: username, 
-        password: oldpw,
-    }, 
-    {$set: {password: newpw}}, 
-    (err, person) => {
-        if (err) {
-            res.json( { 
-                'status' : 'error',
-                'message': 'dbError'
-            } );
-        } else if (!person) {
-            res.json( { 
-                'status' : 'error',
-                'message': 'username/password'
-            } );
-        } else {
-            res.json( { 
-                'status' : 'success',
-                'message': ''
-            } );     
-        }
-    } );
- });
-
-
- /**
-  *  Iteration 1: Add task, edit task, delete task -> Android's 
-  * */ 
-
-app.use('/gettask', (req, res) => {
-    var username = req.query.username;
-
-    User.findOne( { 
-        name: username
-    }, 
-    (err, person) => {
-        if (err) {
-            res.json( [{ 
-                'status' : 'error',
-                'message': 'dbError'
-            }] );
-            console.log("error in getting task");
-        } else if (!person) {
-            res.json( [{ 
-                'status' : 'error',
-                'message': 'no such person'
-            }]);
-
-        } else {
-            res.json(person.currentTodos);
-        }
-    } );
+app.use("/signupandroid", (req, res) => {
+  var username = req.query.username;
+  var pw = req.query.password;
+  var email = req.query.email;
+  var newUser = new User({
+    name: username,
+    password: pw,
+    email: email,
+  });
+  newUser.save((err, product) => {
+    if (err) {
+      res.json({ status: "error" });
+      console.log(err);
+    } else {
+      res.json({ status: "success" });
+    }
+  });
 });
 
-app.use('/addtask', (req, res) => {
-    var username = req.query.username;
-    var title = req.query.title;
-    var description = req.query.desc;
-    var ddl = req.query.deadline;
-    var now = new Date();
-    var newTask = new Todo({
-        title: title,
-        desc: description,
-        deadline: ddl,
-        currDate: now,
-    });
-    User.findOne( { 
-        name: username
-    }, 
+app.use("/changepasswordandroid", (req, res) => {
+  var username = req.query.username;
+  var oldpw = req.query.oldpassword;
+  var newpw = req.query.newpassword;
+
+  User.findOneAndUpdate(
+    {
+      name: username,
+      password: oldpw,
+    },
+    { $set: { password: newpw } },
     (err, person) => {
-        if (err) {
-            res.json( { 
-                'status' : 'error',
-                'message': 'dbError'
-            } );
-            console.log("error in adding task");
-        } else if (!person) {
-            res.json( { 
-                'status' : 'error',
-                'message': 'no such person'
-            });
+      if (err) {
+        res.json({
+          status: "error",
+          message: "dbError",
+        });
+      } else if (!person) {
+        res.json({
+          status: "error",
+          message: "username/password",
+        });
+      } else {
+        res.json({
+          status: "success",
+          message: "",
+        });
+      }
+    }
+  );
+});
 
-        } else {
-            person.currentTodos.push(newTask);
-            person.save((err, product) => {
-                if (err) {
-                    res.json({'status': 'error in saving person'});
-                    console.log("error in saving task in add");
-                } else {
-                    res.json({'status': 'success'});
-                };
-            });
-        }
-    } );
+/**
+ *  Iteration 1: Add task, edit task, delete task -> Android's
+ * */
 
+app.use("/gettask", (req, res) => {
+  var username = req.query.username;
+
+  User.findOne(
+    {
+      name: username,
+    },
+    (err, person) => {
+      if (err) {
+        res.json([
+          {
+            status: "error",
+            message: "dbError",
+          },
+        ]);
+        console.log("error in getting task");
+      } else if (!person) {
+        res.json([
+          {
+            status: "error",
+            message: "no such person",
+          },
+        ]);
+      } else {
+        res.json(person.currentTodos);
+      }
+    }
+  );
+});
+
+app.use("/addtask", (req, res) => {
+  var username = req.query.username;
+  var title = req.query.title;
+  var description = req.query.desc;
+  var ddl = req.query.deadline;
+  var now = new Date();
+  var newTask = new Todo({
+    title: title,
+    desc: description,
+    deadline: ddl,
+    currDate: now,
+  });
+  User.findOne(
+    {
+      name: username,
+    },
+    (err, person) => {
+      if (err) {
+        res.json({
+          status: "error",
+          message: "dbError",
+        });
+        console.log("error in adding task");
+      } else if (!person) {
+        res.json({
+          status: "error",
+          message: "no such person",
+        });
+      } else {
+        person.currentTodos.push(newTask);
+        person.save((err, product) => {
+          if (err) {
+            res.json({ status: "error in saving person" });
+            console.log("error in saving task in add");
+          } else {
+            res.json({ status: "success" });
+          }
+        });
+      }
+    }
+  );
 });
 
 // app.use('/edittask', (req, res) => {
 //     var title = req.query.title;
 //     var desc = req.query.desc;
 
-//     Todo.findOneAndUpdate( { 
+//     Todo.findOneAndUpdate( {
 //         title: title
-//     }, 
-//     {$set: {password: newpw}}, 
+//     },
+//     {$set: {password: newpw}},
 //     (err, person) => {
 //         if (err) {
-//             res.json( { 
+//             res.json( {
 //                 'status' : 'error',
 //                 'message': 'dbError'
 //             } );
 //         } else if (!person) {
-//             res.json( { 
+//             res.json( {
 //                 'status' : 'error',
 //                 'message': 'username/password'
 //             } );
 //         } else {
-//             res.json( { 
+//             res.json( {
 //                 'status' : 'success',
 //                 'message': ''
-//             } );     
+//             } );
 //         }
 //     } );
 // });
 
-
-app.use('/deletetask', (req, res) => {
-    var username = req.query.username;
-    var title = req.query.title;
-    var newTask = new Todo({
-        title: title,
-    });
-    User.findOneAndUpdate( { 
-        name: username
-    }, 
-    {$and: [
-        {$pull: {currentTodos: {title: title}}},
-        {$inc: {numCompleted: 1}},
-        {$push: {completedTodos: newTask}}
-    ]},
+app.use("/deletetask", (req, res) => {
+  var username = req.query.username;
+  var title = req.query.title;
+  var newTask = new Todo({
+    title: title,
+  });
+  User.findOneAndUpdate(
+    {
+      name: username,
+    },
+    {
+      $and: [
+        { $pull: { currentTodos: { title: title } } },
+        { $inc: { numCompleted: 1 } },
+        { $push: { completedTodos: newTask } },
+      ],
+    },
     (err, person) => {
-        if (err) {
-            res.json( { 
-                'status': 'error',
-                'message': 'dbError'
-            } );
-            console.log("error in adding task");
-        } else if (!person) {
-            res.json( { 
-                'status': 'error',
-                'message': 'no such person'
-            } );
-
-        } else {
-            res.json({'status': 'success'});
-        }
-    } );
+      if (err) {
+        res.json({
+          status: "error",
+          message: "dbError",
+        });
+        console.log("error in adding task");
+      } else if (!person) {
+        res.json({
+          status: "error",
+          message: "no such person",
+        });
+      } else {
+        res.json({ status: "success" });
+      }
+    }
+  );
 });
 
 /**
- * 
+ *
  * Iteration 2: Android -> get the number of completed tasks
  */
 
-app.use('/getnumcompleted', (req, res) => {
-    var username = req.query.username;
-    User.findOne( { 
-        name: username
-    }, 
+app.use("/getnumcompleted", (req, res) => {
+  var username = req.query.username;
+  User.findOne(
+    {
+      name: username,
+    },
     (err, person) => {
-        if (err) {
-            res.json( { 
-                'status' : 'error',
-                'message': 'dbError'
-            } );
-            console.log("error in adding task");
-        } else if (!person) {
-            res.json( { 
-                'status' : 'error',
-                'message': 'no such person'
-            });
-
-        } else {
-            res.json({
-                'status': 'success',
-                'message': person.numCompleted
-            });
-
-        }
-    } );
-})
-
+      if (err) {
+        res.json({
+          status: "error",
+          message: "dbError",
+        });
+        console.log("error in adding task");
+      } else if (!person) {
+        res.json({
+          status: "error",
+          message: "no such person",
+        });
+      } else {
+        res.json({
+          status: "success",
+          message: person.numCompleted,
+        });
+      }
+    }
+  );
+});
 
 /**
- * 
- * Iteration 1: Web App Login 
+ *
+ * Iteration 1: Web App Login
  */
 
+const { ensureAuthenticated, forwardAuthenticated } = require('./config/auth');
 
-  app.get("/", checkAuthenticated, function (req, res) {
-    res.render("views/index", { tasks: tasks});
-  });
-  
-  app.get("/login", checkNotAuthenticated, function(req, res) {
-    res.render("views/login");
-  });
-  
-  app.post("/login", checkNotAuthenticated, passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: '/login',
+// Welcome Page
+app.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
+
+// Login Page
+app.get('/users/login', forwardAuthenticated, (req, res) => res.render('login'));
+
+// Register Page
+app.get('/users/register', forwardAuthenticated, (req, res) => res.render('register'));
+
+// Register
+app.post('/register', (req, res) => {
+  const { name, email, password, password2 } = req.body;
+  let errors = [];
+
+  if (!name || !email || !password || !password2) {
+    errors.push({ msg: 'Please enter all fields' });
+  }
+
+  if (password != password2) {
+    errors.push({ msg: 'Passwords do not match' });
+  }
+
+  if (password.length < 6) {
+    errors.push({ msg: 'Password must be at least 6 characters' });
+  }
+  if (errors.length > 0) {
+    res.render('register', {errors, name, email, password, password2});
+  } else {
+    User.findOne({ email: email }).then(user => {
+      if (user) {
+        errors.push({ msg: 'Email already exists' });
+        res.render('register', {
+          errors,
+          name,
+          email,
+          password,
+          password2
+        });
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password
+        });
+
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                req.flash(
+                  'success_msg',
+                  'You are now registered and can log in'
+                );
+                res.redirect('/users/login');
+              })
+              .catch(err => console.log(err));
+          });
+        });
+      }
+    });
+  }
+});
+
+// Login
+app.post('/users/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
     failureFlash: true
-  }));
-  
-  app.get("/register", checkNotAuthenticated, function(req, res) {
-    res.render("views/register");
-  });
-  
-  app.post("/register", checkNotAuthenticated, async function(req, res){
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      users.push({
-        id: Date.now().toString(),
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword
-      })
-      res.redirect("/login")
-    } catch {
-      res.redirect('/register')
-    }
-    console.log(users);
-  });
+  })(req, res, next);
+});
 
-  app.delete("/logout", function(req, res) {
-    req.logOut();
-    res.redirect("/login");
-  })
-  
-  function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    } 
-    res.redirect("/login");
-  }
-  
-  function checkNotAuthenticated(req, res, next){
-    if (req.isAuthenticated()){
-      return res.redirect("/");
-    }
-    next();
-  }
+// Logout
+app.get('/users/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You are logged out');
+  res.redirect('/users/login');
+});
 
 /**
- * 
+ *
  * Iteration 1: Web App Handle Tasks
  */
  
-
-//middleware to run in post request
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-app.get("/", checkAuthenticated, function (req, res) {
-    // var username = req.query.username;
-    //testing:
-    var username = "ipadair";
-
-    var tasks = [];
-    User.findOne( { 
-        name: username
+// Dashboard
+app.get('/dashboard', ensureAuthenticated, function (req, res) {
+  /*
+  res.render('dashboard', {
+    user: req.user,
+  })
+  */
+  
+  
+  var tasks = [];
+  User.findOne( { 
+        name: req.user.name
     }, 
     (err, person) => {
         if (err) {
             console.log("error in getting task");
-            res.render("views/index", { tasks: tasks });
+            res.render("index", { tasks: tasks });
         } else if (!person) {
             console.log("error in getting the person");
-            res.render("views/index", { tasks: tasks });
+            res.render("index", { tasks: tasks });
         } else {
             tasks = person.currentTodos;
-            res.render("views/index", { tasks: tasks });
+            res.render("index", { tasks: tasks });
         }
     } );
-
+    
 });
 
-app.post("/", urlencodedParser, function (req, res) {
+app.get("/tasks", ensureAuthenticated, function (req, res) {
+  // var username = req.query.username;
+  //testing:
+  var username = "pqy";
+
+  //var tasks = [];
+
+  User.findOne(
+    {
+      name: username,
+    },
+    (err, person) => {
+      if (err) {
+        console.log("error in getting task");
+        res.render("index", { tasks: tasks });
+      } else if (!person) {
+        console.log("error in getting the person");
+        res.render("index", { tasks: tasks });
+      } else {
+        tasks = person.currentTodos;
+        res.render("index", { tasks: tasks });
+      }
+    }
+  );
+});
+
+//middleware to run in post request
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+app.post("/dashboard", urlencodedParser, function (req, res) {
     // var username = req.query.username;
     //testing:
-    var username = "ipadair";
+    var username = req.user.name;
     var deadline = req.body.deadline;
     var title = req.body.title;
     var description = req.body.desc;
@@ -638,94 +660,140 @@ app.post("/", urlencodedParser, function (req, res) {
             person.currentTodos.push(newTask);
             person.save((err, product) => {
                 if (err) {
-                    res.render("views/index", { tasks: person.currentTodos });
+                    res.render("index", { tasks: person.currentTodos });
                     console.log("error in saving task in add");
                 } else {
                     console.log("succeeded in adding task and saving");
                 };
             });
-            res.render("views/index", { tasks: person.currentTodos });
+            res.render("index", { tasks: person.currentTodos });
         }
     } );
   
 });
 
-app.post("/delete/:username/:title", function (req, res) {
-    var username = req.params.username;
-    var title = req.params.title;
-    console.log(username);
-    console.log(title);
-    var newTask = new Todo({
-        title: title,
-        desc: description,
-        deadline: deadline,
-        currDate: now,
-    });
-    User.findOneAndUpdate( { 
-    name: username
-    }, 
-    {$and: [
-        {$pull: {currentTodos: {title: title}}},
-        {$inc: {numCompleted: 1}},
-        {$push: {completedTodos: newTask}}
-    ]},
-    (err, person) => {
-        if (err) {
-            res.redirect('/');
-            console.log("error in  deleting task");
-        } else if (!person) {
-            res.redirect('/');
-            console.log("no such person, error in getting user info");
-        } else {
-            res.redirect('/');
-            console.log("succeeded in deleting task and saving, redirects to index");
-        }
-    });
-    
+//edit task
+app.get("/task", ensureAuthenticated, function (req, res) {
+  var title = req.query.title;
+  var desc = req.query.desc;
+  //delete the unedited task
+  var tasks = tasks;
+  //   (cleaner = function (object, title) {
+  //     Object.keys(object).forEach(function (k) {
+  //       var temp = object[k].filter(function (a) {
+  //         return a.title !== title;
+  //       });
+  //       if (object[k].length !== temp.length) {
+  //         object[k] = temp;
+  //       }
+  //     });
 
-
+  //     cleaner(users, title);
+  res.render("task", { title: title, desc: desc });
 });
 
-// This just sends back a message for any URL path not covered above
-app.use('/', (req, res) => {
-    // var username = req.query.username;
-    //testing:
-    var username = "ipadair";
+var rankings = [
+  {
+    name: "Chris",
+    numTasks: 300,
+  },
+  {
+    name: "Estee",
+    numTasks: 350,
+  },
+  {
+    name: "Kitty",
+    numTasks: 2,
+  },
+  {
+    name: "Piggy",
+    numTasks: 8,
+  },
+];
 
-    var tasks = [];
-    User.findOne( { 
-        name: username
-    }, 
+app.get("/rankings", ensureAuthenticated, function (req, res) {
+  //sort tasks by numTasks
+  rankings = rankings.sort(function (a, b) {
+    return b.numTasks - a.numTasks;
+  });
+  res.render("rankings", { rankings: rankings });
+});
+
+app.get("/remove", ensureAuthenticated, function (req, res) {
+  //var title = req.query.title;
+  (err, person) => {
+    if (err) {
+      res.redirect("/dashboard");
+      console.log("error in  deleting task");
+    } else if (!person) {
+      res.redirect("/dashboard");
+      console.log("no such person, error in getting user info");
+    } else {
+      db.collection.remove({ title: "tweet1" });
+      res.redirect("/dashboard");
+      console.log("succeeded in deleting task and saving, redirects to index");
+    }
+  };
+});
+
+app.post("/delete/:username/:title", function (req, res) {
+  var username = req.params.username;
+  var title = req.params.title;
+  console.log(username);
+  console.log(title);
+  var newTask = new Todo({
+    title: title,
+    desc: description,
+    deadline: deadline,
+    currDate: now,
+  });
+  User.findOneAndUpdate(
+    {
+      name: username,
+    },
+    {
+      $and: [
+        { $pull: { currentTodos: { title: title } } },
+        { $inc: { numCompleted: 1 } },
+        { $push: { completedTodos: newTask } },
+      ],
+    },
     (err, person) => {
-        if (err) {
-            console.log("error in getting task");
-            res.render("views/index", { tasks: tasks });
-        } else if (!person) {
-            console.log("error in getting the person");
-            res.render("views/index", { tasks: tasks });
-        } else {
-            tasks = person.currentTodos;
-            res.render("views/index", { tasks: tasks });
-        }
-    } );
+      if (err) {
+        res.redirect("/dashboard");
+        console.log("error in  deleting task");
+      } else if (!person) {
+        res.redirect("/dashboard");
+        console.log("no such person, error in getting user info");
+      } else {
+        res.redirect("/dashboard");
+        console.log(
+          "succeeded in deleting task and saving, redirects to index"
+        );
+      }
+    }
+  );
 });
 
 
 /**
- * 
+ *
  * Iteration 2: web -> rank the users by the # of tasks completed
  */
 
-app.use('/getrankbytasks', (req, res) => {
-    var username = req.query.username;
-    User.find({}).sort({ numCompleted: -1}).exec().addBack((err, docs) => {
-        if (err) {
-            console.log("error occurred during getting ranks by tasks");
-        } else {
-            res.json(docs);
-        }
+app.use("/getrankbytasks", (req, res) => {
+  var username = req.query.username;
+  User.find({})
+    .sort({ numCompleted: -1 })
+    .exec()
+    .addBack((err, docs) => {
+      if (err) {
+        console.log("error occurred during getting ranks by tasks");
+      } else {
+        res.json(docs);
+      }
     });
-})
+});
 
 /**
  * 
@@ -743,9 +811,8 @@ app.use('/getrankbytasks', (req, res) => {
     });
 })
 
+const PORT = process.env.PORT || 3000;
 
-// This starts the web server on port 3000. 
-app.listen(3000, () => {
-    console.log('Listening on port 3000');
-});
+app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
+//module.exports = User;

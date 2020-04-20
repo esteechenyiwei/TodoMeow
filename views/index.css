@@ -32,9 +32,9 @@ body {
   overflow-wrap: break-word;
 }
 
-.list label:hover {
+/* .list label:hover {
   background: rgba(0, 0, 0, 0.1);
-}
+} */
 
 .list input[type="checkbox"] {
   -webkit-appearance: none;
@@ -96,7 +96,7 @@ body {
 .list input[type="checkbox"]:checked ~ span {
   text-decoration: line-through;
 }
-.inpu {
+.input {
   margin-bottom: 1pt;
 }
 
