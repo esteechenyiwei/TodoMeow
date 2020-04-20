@@ -425,13 +425,13 @@ app.use("/delete", (req, res) => {
     {
       name: username,
     },
-    {
-      $and: [
-        { $pull: { currentTodos: { title: title } } },
-        { $inc: { numCompleted: 1 } },
-        { $push: { completedTodos: newTask } },
-      ],
-    },
+    // {
+    //   $and: [
+        { $pull: { currentTodos: { title: title} } },  { multi: false },
+        // { $inc: { numCompleted: 1 } },
+        // { $push: { completedTodos: newTask } },
+    //   ],
+    // },
     (err, person) => {
       if (err) {
         res.json({
@@ -444,8 +444,12 @@ app.use("/delete", (req, res) => {
           status: "error",
           message: "no such person",
         });
+        console.log("no such person in complete task request");
       } else {
         res.json({ status: "success" });
+        console.log("succeeded in complete task request, my current todos is: ");
+        console.log(person);
+        console.log(person.currentTodos);
       }
     }
   );
@@ -677,7 +681,7 @@ app.post("/dashboard", urlencodedParser, function (req, res) {
 
 //edit task
 app.get("/task", ensureAuthenticated, function (req, res) {
-  var username = req.user.name;
+  var username = req.query.name;
   var title = req.query.title;
   var desc = req.query.desc;
   var ddl = req.query.deadline;
