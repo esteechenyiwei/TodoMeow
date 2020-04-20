@@ -708,7 +708,7 @@ app.get("/rankings", ensureAuthenticated, function (req, res) {
         console.log("success, users ranking is:" + docs);
         res.render("rankings", { rankings: docs });
 
-    }}).sort([[pet.level,"desc"]]); 
+    }}).sort([["pet.level","desc"]]); 
   
 });
 
