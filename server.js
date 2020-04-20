@@ -700,6 +700,7 @@ app.get("/task", checkNotAuthenticated, function (req, res) {
   var username = "pqy"
   var title = req.query.title;
   var desc = req.query.desc;
+  var ddl = req.query.deadline;
   //delete the unedited task
   var tasks = tasks;
   User.findOneAndUpdate(
@@ -717,9 +718,8 @@ app.get("/task", checkNotAuthenticated, function (req, res) {
         res.redirect("/");
         console.log("no such person, error in getting user info");
       } else {
-        //res.redirect("/task");
-        console.log("succeeded in deleting task and saving, redirects to index");
-        res.render("views/task", { title: title, desc: desc });
+        console.log("succeeded in display the task");
+        res.render("views/task", { title: title, desc: desc, ddl: ddl});
         }
       });
       
