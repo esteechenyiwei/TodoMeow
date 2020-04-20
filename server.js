@@ -681,7 +681,11 @@ app.post("/dashboard", urlencodedParser, function (req, res) {
 
 //edit task
 app.get("/task", ensureAuthenticated, function (req, res) {
+<<<<<<< HEAD
   var username = req.query.name;
+=======
+  var username = req.body.name;
+>>>>>>> cebf3093dbbdfd6852e564c96d3a5cb8ae33dc70
   var title = req.query.title;
   var desc = req.query.desc;
   var ddl = req.query.deadline;
