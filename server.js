@@ -675,6 +675,35 @@ app.post("/dashboard", urlencodedParser, function (req, res) {
   
 });
 
+//edit task
+app.get("/task", ensureAuthenticated, function (req, res) {
+  var username = req.user.name;
+  var title = req.query.title;
+  var desc = req.query.desc;
+  var ddl = req.query.deadline;
+  //delete the unedited task
+  var tasks = tasks;
+  User.findOneAndUpdate(
+    {
+      name: username,
+    },
+    {
+        $pull: { currentTodos:  {title: title , desc:desc } } 
+    },
+    (err, person) => {
+      if (err) {
+        res.redirect("/dashboard");
+        console.log("error in  deleting task");
+      } else if (!person) {
+        res.redirect("/dashboard");
+        console.log("no such person, error in getting user info");
+      } else {
+        console.log("succeeded in display the task");
+        res.render("views/task", { title: title, desc: desc, ddl: ddl});
+        }
+      });
+      
+});
 
 //get rankings: db + http request & response 
 app.get("/rankings", ensureAuthenticated, function (req, res) {

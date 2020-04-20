@@ -13,8 +13,7 @@
   <meta name="author" content="BBBB" />
 
   <link rel="stylesheet" href="index.css" type="text/css" />
-  <!-- bootstrap -->
-  
+
   <style>
     body {
   justify-content: center;
@@ -161,11 +160,10 @@ h1 {
 }
 
   </style>
+  <!-- bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-
-  
-  </head>
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+</head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(241, 228, 218, 0.4);">
@@ -178,11 +176,11 @@ h1 {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="/dashboard">
+          <a class="nav-link" href="/tasks">
             Tasks <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="catrankings">Cats</a>
+          <a class="nav-link" href="/catrankings">Cats</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/rankings">Rankings</a>
@@ -209,7 +207,6 @@ h1 {
         <div class="form-group">
           <textarea rows="3" type="text" name="desc" class="form-control" id="exampleFormControlInput1"
             placeholder="enter description"></textarea>
-
         </div>
         <div class="form-group">
           <textarea type="text" name="deadline" class="form-control" id="exampleFormControlInput1"
@@ -232,12 +229,15 @@ h1 {
         <i></i>
         <input name="title" value="<%= tasks[i].title%>" type="hidden">
         <input name="desc" value="<%= tasks[i].desc%>" type="hidden">
+        <input name="deadline" value="<%= tasks[i].deadline%>" type="hidden">
         <span><%= tasks[i].title%></input></span>
-        <p><%= tasks[i].desc %>
+        <p>description: <%= tasks[i].desc %>
           <br>
-          <button type="submit" class="text-muted btn float-right mb-4 nav-item" href="#" role="button">
+          <small>deadline: <%= tasks[i].deadline %></small>
+          <button type="submit" class="text-muted btn float-right nav-item" href="#" role="button">
             Edit
-          </button></p>
+          </button>
+        </p>
         <br>
       </form>
     </label>
