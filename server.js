@@ -256,10 +256,11 @@ User.find().exec((err, res) => {
 //     password: "233",
 //     email: "pqy@seas.upenn.edu",
 // });
+// newperson4.save();
 
 // newperson2.save();
 // newperson3.save();
-// newperson4.save();
+
 
 /**
  * some query functions that needs to be written:
@@ -706,9 +707,7 @@ app.get("/task", checkNotAuthenticated, function (req, res) {
       name: username,
     },
     {
-      $and: [
-        { $pull: { currentTodos: { title: title , desc:desc} } }
-      ],
+        $pull: { currentTodos:  {title: title , desc:desc } } 
     },
     (err, person) => {
       if (err) {
