@@ -692,31 +692,21 @@ app.get("/task", ensureAuthenticated, function (req, res) {
   res.render("task", { title: title, desc: desc });
 });
 
-var rankings = [
-  {
-    name: "Chris",
-    numTasks: 300,
-  },
-  {
-    name: "Estee",
-    numTasks: 350,
-  },
-  {
-    name: "Kitty",
-    numTasks: 2,
-  },
-  {
-    name: "Piggy",
-    numTasks: 8,
-  },
-];
-
+//get rankings: db + http request & response 
 app.get("/rankings", ensureAuthenticated, function (req, res) {
-  //sort tasks by numTasks
-  rankings = rankings.sort(function (a, b) {
-    return b.numTasks - a.numTasks;
-  });
-  res.render("rankings", { rankings: rankings });
+
+  let rankings = [{name: "loading, prob some error occured", numCompleted: 0 }];
+
+  User.find({}, (err, docs) => {
+    if (err) {
+        console.log("error occurred during getting ranks by tasks");
+        res.render("rankings", { rankings: rankings });
+    } else {
+        console.log("success, users ranking is:" + docs);
+        res.render("rankings", { rankings: docs });
+
+    }}).sort([["numCompleted","desc"]]); 
+  
 });
 
 app.get("/remove", ensureAuthenticated, function (req, res) {

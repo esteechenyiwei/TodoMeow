@@ -19,32 +19,13 @@ public class LoginAccessWebTask extends AsyncTask<URL, String, String> {
             URL url = urls[0];
             // create connection and send HTTP request
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-            try {
-                conn.setRequestMethod("GET");
-                conn.connect();
-            } catch (Exception e) {
-                System.out.println("error in connection");
-            }
+            conn.setRequestMethod("GET"); conn.connect();
             // read first line of data that is returned
             Scanner in = new Scanner(url.openStream());
-
             String msg = in.nextLine();
-            System.out.println("msg");
             JSONObject jo = new JSONObject(msg);
             String status = jo.getString("status");
-            System.out.println("status");
-            /**
-             * Estee's note to Jasmine: I added this so the error message can be
-             * displayed, easier for debug. The logic is that if the status is
-             * success, then "success" is returned. Else, the error message in the
-             * returned json object is returned.
-             */
-
-            if (status.equals("success")) {
-                return status;
-            } else {
-                return jo.getString("message");
-            }
+            return status;
         } catch (ProtocolException e) {
             e.printStackTrace();
             return e.toString();

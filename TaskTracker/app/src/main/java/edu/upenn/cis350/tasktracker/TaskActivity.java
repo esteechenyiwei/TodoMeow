@@ -22,7 +22,6 @@ public class TaskActivity extends AppCompatActivity {
     Button addbtn;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,16 +47,15 @@ public class TaskActivity extends AppCompatActivity {
         ourTasks = findViewById(R.id.ourTasks);
         ourTasks.setLayoutManager(new LinearLayoutManager(this));
         list = new ArrayList<>();
-        list = TaskDataSource.getTask(username);
+        //list = TaskDataSource.getTask(username);
+        list.add(new Task("CIS 350", "Demo", "Tomorrow"));
+        list.add(new Task("CIS 350 2", "Demo", "Tomorrow"));
+        list.add(new Task("CIS 350 3", "Demo", "Tomorrow"));
+        list.add(new Task("CIS 350 4", "Demo", "Tomorrow"));
+        list.add(new Task("CIS 350 5", "Demo", "Tomorrow"));
 
         taskAdapter = new TaskAdapter(TaskActivity.this, list);
         ourTasks.setAdapter(taskAdapter);
-    }
-
-    protected void onDeleteButtonClick(View view) {
-        Button b = findViewById(R.id.deletebtn);
-
-
     }
 
 }

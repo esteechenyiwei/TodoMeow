@@ -2,7 +2,7 @@ package edu.upenn.cis350.tasktracker;
 
 public class Task {
 
-    String title, desc, deadline, id;
+    String title, desc, deadline;
 
     public Task(){
     }
@@ -11,7 +11,6 @@ public class Task {
         this.title = title;
         this.desc = desc;
         this.deadline = deadline;
-        this.id = id;
     }
 
     public String getTitle() {
@@ -36,9 +35,5 @@ public class Task {
 
     public void setDeadline(String deadline) {
         this.deadline = deadline;
-    }
-
-    public String getId() {
-        return id;
     }
 }

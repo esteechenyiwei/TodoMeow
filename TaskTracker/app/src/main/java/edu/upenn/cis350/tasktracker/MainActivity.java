@@ -45,14 +45,6 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(this, TaskActivity.class);
             i.putExtra("username", usernamestr);
             startActivityForResult(i, D);
-        } else if (status.equals("error")) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "error: message -- " + status,
-                    Toast.LENGTH_LONG).show();
-            return;
-        } else if (status == null) {
-            System.out.println("error occured");
         } else {
             Toast.makeText(
                     getApplicationContext(),

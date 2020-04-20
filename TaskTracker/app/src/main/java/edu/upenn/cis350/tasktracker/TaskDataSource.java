@@ -18,16 +18,16 @@ public class TaskDataSource {
         }
     }
 
-    public static String addTask(String inputusername, Task t) {
+    public static ArrayList<Task> addTask(String inputusername, Task t) {
         try {
             String title = t.getTitle();
             String desc = t.getDesc();
             String deadline = t.getDeadline();
             URL url = new URL("http://10.0.2.2:3000/addtask?username=" + inputusername +
                     "&title=" + title + "&desc=" + desc + "&deadline=" + deadline);
-            LoginAccessWebTask task = new LoginAccessWebTask();
+            TaskAccessWebTask task = new TaskAccessWebTask();
             task.execute(url);
-            String a = task.get();
+            ArrayList<Task> a = task.get();
             return a;
         }
         catch (Exception e) {
@@ -35,13 +35,13 @@ public class TaskDataSource {
         }
     }
 
-    public static String deleteTask(String inputusername, String title) {
+    public static ArrayList<Task> deleteTask(String inputusername, String title) {
         try {
             URL url = new URL("http://10.0.2.2:3000/delete?username=" + inputusername +
                     "&title=" + title);
-            LoginAccessWebTask task = new LoginAccessWebTask();
+            TaskAccessWebTask task = new TaskAccessWebTask();
             task.execute(url);
-            String a = task.get();
+            ArrayList<Task> a = task.get();
             return a;
         }
         catch (Exception e) {

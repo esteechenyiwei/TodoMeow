@@ -27,7 +27,7 @@ public class TaskAccessWebTask extends AsyncTask<URL, String, ArrayList<Task>> {
             Scanner in = new Scanner(url.openStream());
             String msg = in.nextLine();
             JSONArray data =  new JSONArray(msg);
-            System.out.println(msg);
+
             ArrayList<Task> t = new ArrayList<Task>();
 
             //iterating over JSONArray
