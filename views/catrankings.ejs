@@ -13,6 +13,154 @@
   <meta name="author" content="BBBB" />
 
   <link rel="stylesheet" href="index.css" type="text/css" />
+
+  <style>
+
+body {
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+.list {
+  padding: 1% 75px 10px 30px;
+  margin-left: 10%;
+  margin-right: 10%;
+  position: relative;
+  background: #f1e4da;
+  overflow-wrap: break-word;
+  border-radius: 5%;
+  /* border: 1px dotted;
+  border-color: #ee9ca8;
+  box-shadow: #d6949d; */
+}
+
+.list label {
+  position: relative;
+  display: block !important;
+  margin: 3% 20%;
+  color: rgb(95, 95, 95);
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: lighter;
+  /* border: 0.5px solid #fff; */
+  border-radius: 3px;
+  border-spacing: 5px;
+  overflow-wrap: break-word;
+}
+
+/* .list label:hover {
+  background: rgba(0, 0, 0, 0.1);
+} */
+
+.list input[type="checkbox"] {
+  -webkit-appearance: none;
+}
+
+.list i {
+  position: absolute;
+  top: 3px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid #ffffff;
+}
+
+.list input[type="checkbox"]:checked ~ i {
+  top: 1px;
+  border-top: none;
+  border-right: none;
+  width: 25px;
+  height: 15px;
+  transform: rotate(-45deg);
+}
+.list p {
+  margin-left: 45px;
+  font-size: medium;
+  color: rgba(0, 0, 0, 0.6);
+}
+.list span {
+  position: relative;
+  font-weight: 350;
+  left: 40px;
+  transition: 0.5s;
+}
+/* 
+.list span:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgb(122, 69, 69);
+  transform: translateY(60%) scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s;
+}
+
+.list input[type="checkbox"]:checked ~ span:before {
+ transform: translateY(60%) scaleX(1);
+  transform-origin: right;
+  transition: transform 0.5s; 
+} */
+
+#but {
+  background-color: #f1e4da;
+  border-color: #f1e4da;
+}
+
+.list input[type="checkbox"]:checked ~ span {
+  text-decoration: line-through;
+}
+.input {
+  margin-bottom: 1pt;
+}
+
+.jumbotron {
+  background-image: url("paw.png");
+  background-size: 70%;
+  background-position-x: center;
+  background-position-y: 15%;
+  background-repeat: no-repeat;
+  text-align: center;
+  background-color: #faf1ea !important;
+}
+
+.lead {
+  color: black !important;
+  opacity: 100%;
+}
+
+h1 {
+  color: black !important;
+  opacity: 100%;
+}
+
+.btn-info {
+  background-color: #f4acb7 !important;
+  border-color: #f8bac5 !important;
+  border-width: 2pt !important;
+  background-image: url("paw.png") !important;
+  outline: 0pt !important;
+}
+
+.btn-info:hover {
+  background-color: #ee9ca8 !important;
+  border-color: #f4acb7 !important;
+  border-width: 2pt !important;
+  background-image: url("paw.png") !important;
+}
+
+.btn-info:focus {
+  background-color: #ffdde2 !important;
+  border-color: #d6949d !important;
+  border-width: 2pt !important;
+  outline: 0pt !important;
+}
+
+  </style>
   <!-- bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />

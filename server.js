@@ -688,8 +688,7 @@ app.get("/rankings", ensureAuthenticated, function (req, res) {
     } else {
         console.log("success, users ranking is:" + docs);
         res.render("rankings", { rankings: docs });
-
-    }}).sort([['numCompleted',"desc"]]); 
+    }}).sort([["numCompleted","desc"]]); 
   
 });
 
