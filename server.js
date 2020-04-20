@@ -692,25 +692,40 @@ app.post("/", urlencodedParser, function (req, res) {
     }
   );
 });
+
+
 //edit task
 app.get("/task", checkNotAuthenticated, function (req, res) {
+  var username = "pqy"
   var title = req.query.title;
   var desc = req.query.desc;
   //delete the unedited task
   var tasks = tasks;
-  //   (cleaner = function (object, title) {
-  //     Object.keys(object).forEach(function (k) {
-  //       var temp = object[k].filter(function (a) {
-  //         return a.title !== title;
-  //       });
-  //       if (object[k].length !== temp.length) {
-  //         object[k] = temp;
-  //       }
-  //     });
-
-  //     cleaner(users, title);
-  res.render("views/task", { title: title, desc: desc });
+  User.findOneAndUpdate(
+    {
+      name: username,
+    },
+    {
+      $and: [
+        { $pull: { currentTodos: { title: title , desc:desc} } }
+      ],
+    },
+    (err, person) => {
+      if (err) {
+        res.redirect("/");
+        console.log("error in  deleting task");
+      } else if (!person) {
+        res.redirect("/");
+        console.log("no such person, error in getting user info");
+      } else {
+        //res.redirect("/task");
+        console.log("succeeded in deleting task and saving, redirects to index");
+        res.render("views/task", { title: title, desc: desc });
+        }
+      });
+      
 });
+
 
 var rankings = [
   {
