@@ -21,20 +21,19 @@
  *
  */
 
-const express = require('express');
+const express = require("express");
 //const expressLayouts = require('express-ejs-layouts');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const flash = require('connect-flash');
-const session = require('express-session');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const passport = require("passport");
+const flash = require("connect-flash");
+const session = require("express-session");
+const bcrypt = require("bcryptjs");
 var bodyParser = require("body-parser");
 
 const app = express();
 
 // Passport Config
-require('./config/passport')(passport);
-
+require("./config/passport")(passport);
 
 /**
  * this is the account that Estee created on MongoDB Atlas, before you want to use it you should tell me and I will
@@ -50,18 +49,19 @@ var localUrl = "mongodb://localhost:27017";
 /*
 Estee's account didn't work for me so I created a new one below (in ./config/keys); this one should work for everyone --Vivian
  */
- 
+
 // DB Config
-const db = require('./config/keys').mongoURI;
+const db = require("./config/keys").mongoURI;
 
 // Connect to MongoDB
-mongoose.connect(db, { useNewUrlParser: true })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
 
 // EJS
 //app.use(expressLayouts);
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 // Express body parser
 app.use(express.urlencoded({ extended: true }));
@@ -69,9 +69,9 @@ app.use(express.urlencoded({ extended: true }));
 // Express session
 app.use(
   session({
-    secret: 'secret',
+    secret: "secret",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 
@@ -92,10 +92,10 @@ app.use(passport.session());
 app.use(flash());
 
 // Global variables
-app.use(function(req, res, next) {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
   next();
 });
 
@@ -189,9 +189,9 @@ User.find().exec((err, res) => {
 });
 
 var newperson2 = new User({
-    name: "ipadpro",
-    password: "uopelrnmJ90",
-    email: "b@gmail.com",
+  name: "ipadpro",
+  password: "uopelrnmJ90",
+  email: "b@gmail.com",
 });
 
 // var newperson3 = new User({
@@ -384,35 +384,39 @@ app.use("/addtask", (req, res) => {
   );
 });
 
-app.use('/edittask', (req, res) => {
-    var person = req.query.username;
-    var title = req.query.orgtitle;
-    var newdesc = req.query.desc;
-    var newdeadline = req.query.desc;
-    var newtitle = req.query.title;
+app.use("/edittask", (req, res) => {
+  var person = req.query.username;
+  var title = req.query.orgtitle;
+  var newdesc = req.query.desc;
+  var newdeadline = req.query.desc;
+  var newtitle = req.query.title;
 
-    Todo.findOneAndUpdate( {
-        name: person
+  Todo.findOneAndUpdate(
+    {
+      name: person,
     },
-    {$set: [{desc: newdesc}, {deadline: newdeadline}, {title: newtitle}]},
+    {
+      $set: [{ desc: newdesc }, { deadline: newdeadline }, { title: newtitle }],
+    },
     (err, person) => {
-        if (err) {
-            res.json( {
-                'status' : 'error',
-                'message': 'dbError'
-            } );
-        } else if (!person) {
-            res.json( {
-                'status' : 'error',
-                'message': 'no such title'
-            } );
-        } else {
-            res.json( {
-                'status' : 'success',
-                'message': ''
-            } );
-        }
-    } );
+      if (err) {
+        res.json({
+          status: "error",
+          message: "dbError",
+        });
+      } else if (!person) {
+        res.json({
+          status: "error",
+          message: "no such title",
+        });
+      } else {
+        res.json({
+          status: "success",
+          message: "",
+        });
+      }
+    }
+  );
 });
 
 app.use("/delete", (req, res) => {
@@ -477,7 +481,7 @@ app.use("/getnumcompleted", (req, res) => {
       } else {
         res.json({
           status: "success",
-          message: (person.numCompleted).toString(),
+          message: person.numCompleted.toString(),
         });
       }
     }
@@ -489,51 +493,55 @@ app.use("/getnumcompleted", (req, res) => {
  * Iteration 1: Web App Login
  */
 
-const { ensureAuthenticated, forwardAuthenticated } = require('./config/auth');
+const { ensureAuthenticated, forwardAuthenticated } = require("./config/auth");
 
 // Welcome Page
-app.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
+app.get("/", forwardAuthenticated, (req, res) => res.render("welcome"));
 
 // Login Page
-app.get('/users/login', forwardAuthenticated, (req, res) => res.render('login'));
+app.get("/users/login", forwardAuthenticated, (req, res) =>
+  res.render("login")
+);
 
 // Register Page
-app.get('/users/register', forwardAuthenticated, (req, res) => res.render('register'));
+app.get("/users/register", forwardAuthenticated, (req, res) =>
+  res.render("register")
+);
 
 // Register
-app.post('/users/register', (req, res) => {
+app.post("/users/register", (req, res) => {
   const { name, email, password, password2 } = req.body;
   let errors = [];
 
   if (!name || !email || !password || !password2) {
-    errors.push({ msg: 'Please enter all fields' });
+    errors.push({ msg: "Please enter all fields" });
   }
 
   if (password != password2) {
-    errors.push({ msg: 'Passwords do not match' });
+    errors.push({ msg: "Passwords do not match" });
   }
 
   if (password.length < 6) {
-    errors.push({ msg: 'Password must be at least 6 characters' });
+    errors.push({ msg: "Password must be at least 6 characters" });
   }
   if (errors.length > 0) {
-    res.render('register', {errors, name, email, password, password2});
+    res.render("register", { errors, name, email, password, password2 });
   } else {
-    User.findOne({ email: email }).then(user => {
+    User.findOne({ email: email }).then((user) => {
       if (user) {
-        errors.push({ msg: 'Email already exists' });
-        res.render('register', {
+        errors.push({ msg: "Email already exists" });
+        res.render("register", {
           errors,
           name,
           email,
           password,
-          password2
+          password2,
         });
       } else {
         const newUser = new User({
           name,
           email,
-          password
+          password,
         });
 
         bcrypt.genSalt(10, (err, salt) => {
@@ -542,14 +550,14 @@ app.post('/users/register', (req, res) => {
             newUser.password = hash;
             newUser
               .save()
-              .then(user => {
+              .then((user) => {
                 req.flash(
-                  'success_msg',
-                  'You are now registered and can log in'
+                  "success_msg",
+                  "You are now registered and can log in"
                 );
-                res.redirect('/users/login');
+                res.redirect("/users/login");
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           });
         });
       }
@@ -558,52 +566,52 @@ app.post('/users/register', (req, res) => {
 });
 
 // Login
-app.post('/users/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/users/login',
-    failureFlash: true
+app.post("/users/login", (req, res, next) => {
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/users/login",
+    failureFlash: true,
   })(req, res, next);
 });
 
 // Logout
-app.get('/users/logout', (req, res) => {
+app.get("/users/logout", (req, res) => {
   req.logout();
-  req.flash('success_msg', 'You are logged out');
-  res.redirect('/users/login');
+  req.flash("success_msg", "You are logged out");
+  res.redirect("/users/login");
 });
 
 /**
  *
  * Iteration 1: Web App Handle Tasks
  */
- 
+
 // Dashboard
-app.get('/dashboard', ensureAuthenticated, function (req, res) {
+app.get("/dashboard", ensureAuthenticated, function (req, res) {
   /*
   res.render('dashboard', {
     user: req.user,
   })
   */
-  
-  
+
   var tasks = [];
-  User.findOne( { 
-        name: req.user.name
-    }, 
+  User.findOne(
+    {
+      name: req.user.name,
+    },
     (err, person) => {
-        if (err) {
-            console.log("error in getting task");
-            res.render("index", { tasks: tasks });
-        } else if (!person) {
-            console.log("error in getting the person");
-            res.render("index", { tasks: tasks });
-        } else {
-            tasks = person.currentTodos;
-            res.render("index", { tasks: tasks });
-        }
-    } );
-    
+      if (err) {
+        console.log("error in getting task");
+        res.render("index", { tasks: tasks });
+      } else if (!person) {
+        console.log("error in getting the person");
+        res.render("index", { tasks: tasks });
+      } else {
+        tasks = person.currentTodos;
+        res.render("index", { tasks: tasks });
+      }
+    }
+  );
 });
 
 app.get("/tasks", ensureAuthenticated, function (req, res) {
@@ -636,48 +644,48 @@ app.get("/tasks", ensureAuthenticated, function (req, res) {
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.post("/dashboard", urlencodedParser, function (req, res) {
-    // var username = req.query.username;
-    //testing:
-    var username = req.user.name;
-    var deadline = req.body.deadline;
-    var title = req.body.title;
-    var description = req.body.desc;
-    // var ddl = req.query.deadline;
-    var now = new Date();
-    var newTask = new Todo({
-        title: title,
-        desc: description,
-        deadline: deadline,
-        currDate: now,
-    });
-    User.findOne( { 
-        name: username
-    }, 
+  // var username = req.query.username;
+  //testing:
+  var username = req.user.name;
+  var deadline = req.body.deadline;
+  var title = req.body.title;
+  var description = req.body.desc;
+  // var ddl = req.query.deadline;
+  var now = new Date();
+  var newTask = new Todo({
+    title: title,
+    desc: description,
+    deadline: deadline,
+    currDate: now,
+  });
+  User.findOne(
+    {
+      name: username,
+    },
     (err, person) => {
-        if (err) {
-
-            console.log("error in adding task");
-        } else if (!person) {
-            console.log("no such person, error in getting user info");
-        } else {
-            person.currentTodos.push(newTask);
-            person.save((err, product) => {
-                if (err) {
-                    res.render("index", { tasks: person.currentTodos });
-                    console.log("error in saving task in add");
-                } else {
-                    console.log("succeeded in adding task and saving");
-                };
-            });
+      if (err) {
+        console.log("error in adding task");
+      } else if (!person) {
+        console.log("no such person, error in getting user info");
+      } else {
+        person.currentTodos.push(newTask);
+        person.save((err, product) => {
+          if (err) {
             res.render("index", { tasks: person.currentTodos });
-        }
-    } );
-  
+            console.log("error in saving task in add");
+          } else {
+            console.log("succeeded in adding task and saving");
+          }
+        });
+        res.render("index", { tasks: person.currentTodos });
+      }
+    }
+  );
 });
 
 //edit task
 app.get("/task", ensureAuthenticated, function (req, res) {
-  var username = req.body.name;
+  var username = req.user.name;
   var title = req.query.title;
   var desc = req.query.desc;
   var ddl = req.query.deadline;
@@ -688,7 +696,7 @@ app.get("/task", ensureAuthenticated, function (req, res) {
       name: username,
     },
     {
-        $pull: { currentTodos:  {title: title , desc:desc } } 
+      $pull: { currentTodos: { title: title, desc: desc } },
     },
     (err, person) => {
       if (err) {
@@ -699,44 +707,43 @@ app.get("/task", ensureAuthenticated, function (req, res) {
         console.log("no such person, error in getting user info");
       } else {
         console.log("succeeded in display the task");
-        res.render("views/task", { title: title, desc: desc, ddl: ddl});
-        }
-      });
-      
+        res.render("task", { title: title, desc: desc, ddl: ddl });
+      }
+    }
+  );
 });
 
-//get rankings: db + http request & response 
+//get rankings: db + http request & response
 app.get("/rankings", ensureAuthenticated, function (req, res) {
-
-  let rankings = [{name: "loading, prob some error occured", numCompleted: 0 }];
+  let rankings = [
+    { name: "loading, prob some error occured", numCompleted: 0 },
+  ];
 
   User.find({}, (err, docs) => {
     if (err) {
-        console.log("error occurred during getting ranks by tasks");
-        res.render("rankings", { rankings: rankings });
+      console.log("error occurred during getting ranks by tasks");
+      res.render("rankings", { rankings: rankings });
     } else {
-        console.log("success, users ranking is:" + docs);
-        res.render("rankings", { rankings: docs });
-    }}).sort([["numCompleted","desc"]]); 
-  
+      console.log("success, users ranking is:" + docs);
+      res.render("rankings", { rankings: docs });
+    }
+  }).sort([["numCompleted", "desc"]]);
 });
 
 //get rankings:(vivian in charge)
 app.get("/catrankings", ensureAuthenticated, function (req, res) {
+  let catrankings = [{ name: "loading, prob some error occured", level: 0 }];
 
-    let catrankings = [{name: "loading, prob some error occured", level: 0 }];
-  
-    User.find({}, (err, docs) => {
-      if (err) {
-          console.log("error occurred during getting ranks by cat level");
-          res.render("catrankings", { catrankings: catrankings });
-      } else {
-          console.log("success, users ranking is:" + docs);
-          res.render("catrankings", { catrankings: docs });
-  
-      }}).sort([['pet.level',"desc"]]); 
-    
-  });
+  User.find({}, (err, docs) => {
+    if (err) {
+      console.log("error occurred during getting ranks by cat level");
+      res.render("catrankings", { catrankings: catrankings });
+    } else {
+      console.log("success, users ranking is:" + docs);
+      res.render("catrankings", { catrankings: docs });
+    }
+  }).sort([["pet.level", "desc"]]);
+});
 
 app.get("/remove", ensureAuthenticated, function (req, res) {
   //var title = req.query.title;
@@ -793,7 +800,6 @@ app.post("/delete/:username/:title", function (req, res) {
     }
   );
 });
-
 
 /**
  *
