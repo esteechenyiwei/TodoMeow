@@ -708,7 +708,11 @@ app.get("/rankings", ensureAuthenticated, function (req, res) {
         console.log("success, users ranking is:" + docs);
         res.render("rankings", { rankings: docs });
 
+<<<<<<< HEAD
+    }}).sort([["pet.level","desc"]]); 
+=======
     }}).sort([['numCompleted',"desc"]]); 
+>>>>>>> ea149725d1a7678619133096c7588495ffccc7e1
   
 });
 
