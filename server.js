@@ -498,7 +498,7 @@ app.get('/users/login', forwardAuthenticated, (req, res) => res.render('login'))
 app.get('/users/register', forwardAuthenticated, (req, res) => res.render('register'));
 
 // Register
-app.post('/register', (req, res) => {
+app.post('/users/register', (req, res) => {
   const { name, email, password, password2 } = req.body;
   let errors = [];
 
