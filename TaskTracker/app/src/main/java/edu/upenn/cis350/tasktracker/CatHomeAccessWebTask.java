@@ -33,9 +33,9 @@ public class CatHomeAccessWebTask extends AsyncTask<URL, String, String> {
             JSONObject jo = new JSONObject(msg);
             String status = jo.getString("status");
             if (status.equals("success")) {
-                return status;
-            } else {
                 return jo.getString("message");
+            } else {
+                return status;
             }
 
             //System.out.println("status");

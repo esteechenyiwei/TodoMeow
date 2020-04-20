@@ -39,12 +39,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     "Please fill in all required information!",
                     Toast.LENGTH_LONG).show();
             return;
-        } else if (!passwordstr1.equals(passwordstr2)) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Please enter the same passwords!",
-                    Toast.LENGTH_LONG).show();
-            return;
         } else {
             String status = LoginDataSource.changePassword(usernamestr, passwordstr1, passwordstr2);
             if (status.equals("success")) {

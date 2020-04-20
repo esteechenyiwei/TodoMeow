@@ -267,10 +267,10 @@ app.use("/signupandroid", (req, res) => {
   });
   newUser.save((err, product) => {
     if (err) {
-      res.json({ status: "error" });
+      res.json({ status: "error", message: "" });
       console.log(err);
     } else {
-      res.json({ status: "success" });
+      res.json({ status: "success", message: "" });
     }
   });
 });
@@ -385,13 +385,14 @@ app.use("/addtask", (req, res) => {
 });
 
 app.use('/edittask', (req, res) => {
+    var person = req.query.username;
     var title = req.query.orgtitle;
     var newdesc = req.query.desc;
     var newdeadline = req.query.desc;
     var newtitle = req.query.title;
 
     Todo.findOneAndUpdate( {
-        title: title
+        name: person
     },
     {$set: [{desc: newdesc}, {deadline: newdeadline}, {title: newtitle}]},
     (err, person) => {
@@ -403,7 +404,7 @@ app.use('/edittask', (req, res) => {
         } else if (!person) {
             res.json( {
                 'status' : 'error',
-                'message': 'username/password'
+                'message': 'no such title'
             } );
         } else {
             res.json( {
@@ -476,7 +477,7 @@ app.use("/getnumcompleted", (req, res) => {
       } else {
         res.json({
           status: "success",
-          message: person.numCompleted,
+          message: (person.numCompleted).toString(),
         });
       }
     }

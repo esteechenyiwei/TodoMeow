@@ -61,8 +61,8 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     public void onCatHomeClick(View view) {
-        Intent i = new Intent(TaskActivity.this, CatHomeActivity.class);
-        i.putExtra("username", username);
-        startActivity(i);
+        Intent intent = new Intent(this, CatHomeActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 }

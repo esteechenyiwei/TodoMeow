@@ -66,7 +66,7 @@
             android:id="@+id/numtonextlevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="number of tasks to next level"
             style="@style/edit_text"/>
 
         <Button

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +21,7 @@ public class CatHomeActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.change_password_activity);
+        setContentView(R.layout.activity_cat_home);
 
         usernamestr = getIntent().getStringExtra("username");
 
@@ -29,12 +30,17 @@ public class CatHomeActivity extends AppCompatActivity {
         TextView tonextleveltv = (TextView) findViewById(R.id.numtonextlevel);
 
         String numcompleted = CatHomeDataSource.getLevelStatus(usernamestr);
-        int level = Integer.parseInt(numcompleted);
+        int level = 0;
+        if (numcompleted.equals("error")) {
+            Toast.makeText(this, "error in getting response", Toast.LENGTH_LONG );
+        } else {
+            level = Integer.parseInt(numcompleted);
+        }
         numcompletedtv.setText(numcompleted);
         String levelstr = determineLevel(level);
         leveltv.setText(levelstr);
         int tonextlevel = determineTasksToNextLevel(level);
-        tonextleveltv.setText(tonextlevel);
+        tonextleveltv.setText("" + tonextlevel);
     }
 
 
