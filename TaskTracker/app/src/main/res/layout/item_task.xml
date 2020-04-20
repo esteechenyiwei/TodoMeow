@@ -37,7 +37,22 @@
     <LinearLayout
         android:layout_marginTop="30dp"
         android:layout_width="125dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/deletebtn"
+            android:onClick="onDeleteButtonClick"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="X"
+            android:background="@drawable/bgbtn"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
 
         <TextView
             android:id="@+id/deadline"
@@ -45,9 +60,12 @@
             android:textColor="#F63EA5"
             android:layout_marginTop="8dp"
             android:text="April 4th"
-            android:gravity="right"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+
+
 
     </LinearLayout>
 

@@ -3,6 +3,7 @@ package edu.upenn.cis350.tasktracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
     Context context;
     ArrayList<Task> task;
+    String username;
 
-    public TaskAdapter(Context c,  ArrayList<Task> t){
+    public TaskAdapter(Context c,  ArrayList<Task> t, String user){
         context = c;
         task = t;
+        username = user;
     }
 
     @NonNull
@@ -33,6 +36,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         holder.title.setText(task.get(position).getTitle());
         holder.desc.setText(task.get(position).getDesc());
         holder.deadline.setText(task.get(position).getDeadline());
+
+        final String taskTitle = task.get(position).getTitle();
+        final String taskDesc = task.get(position).getDesc();
+        final String taskDeadline = task.get(position).getDeadline();
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, EditTaskActivity.class);
+                i.putExtra("title", taskTitle);
+                i.putExtra("desc", taskDesc);
+                i.putExtra("deadline", taskDeadline);
+                i.putExtra("username", username);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override

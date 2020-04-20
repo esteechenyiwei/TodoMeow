@@ -384,33 +384,35 @@ app.use("/addtask", (req, res) => {
   );
 });
 
-// app.use('/edittask', (req, res) => {
-//     var title = req.query.title;
-//     var desc = req.query.desc;
+app.use('/edittask', (req, res) => {
+    var title = req.query.orgtitle;
+    var newdesc = req.query.desc;
+    var newdeadline = req.query.desc;
+    var newtitle = req.query.title;
 
-//     Todo.findOneAndUpdate( {
-//         title: title
-//     },
-//     {$set: {password: newpw}},
-//     (err, person) => {
-//         if (err) {
-//             res.json( {
-//                 'status' : 'error',
-//                 'message': 'dbError'
-//             } );
-//         } else if (!person) {
-//             res.json( {
-//                 'status' : 'error',
-//                 'message': 'username/password'
-//             } );
-//         } else {
-//             res.json( {
-//                 'status' : 'success',
-//                 'message': ''
-//             } );
-//         }
-//     } );
-// });
+    Todo.findOneAndUpdate( {
+        title: title
+    },
+    {$set: [{desc: newdesc}, {deadline: newdeadline}, {title: newtitle}]},
+    (err, person) => {
+        if (err) {
+            res.json( {
+                'status' : 'error',
+                'message': 'dbError'
+            } );
+        } else if (!person) {
+            res.json( {
+                'status' : 'error',
+                'message': 'username/password'
+            } );
+        } else {
+            res.json( {
+                'status' : 'success',
+                'message': ''
+            } );
+        }
+    } );
+});
 
 app.use("/deletetask", (req, res) => {
   var username = req.query.username;
@@ -705,9 +707,26 @@ app.get("/rankings", ensureAuthenticated, function (req, res) {
         console.log("success, users ranking is:" + docs);
         res.render("rankings", { rankings: docs });
 
-    }}).sort([["numCompleted","desc"]]); 
+    }}).sort([[pet.level,"desc"]]); 
   
 });
+
+//get rankings:(vivian in charge)
+app.get("/rankingsbycatlevel", ensureAuthenticated, function (req, res) {
+
+    let catrankings = [{name: "loading, prob some error occured", level: 0 }];
+  
+    User.find({}, (err, docs) => {
+      if (err) {
+          console.log("error occurred during getting ranks by tasks");
+          res.render("rankings", { rankings: rankings });
+      } else {
+          console.log("success, users ranking is:" + docs);
+          res.render("rankings", { rankings: docs });
+  
+      }}).sort([[pet.level,"desc"]]); 
+    
+  });
 
 app.get("/remove", ensureAuthenticated, function (req, res) {
   //var title = req.query.title;

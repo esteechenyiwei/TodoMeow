@@ -86,4 +86,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/toCatHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Visit My Cat Home"
+        style="@style/button_back"
+        android:onClick="onCatHomeClick"/>
+
 </LinearLayout>

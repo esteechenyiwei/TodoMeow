@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_top_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context=".CreateLoginActivity"
+    tools:context=".CatHomeActivity"
     android:background="#D8E0BB">
 
     <LinearLayout
@@ -17,82 +17,74 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView"
             android:layout_width="203dp"
             android:layout_height="225dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/create" />
+            app:srcCompat="@drawable/cathome" />
 
         <TextView
-            android:id="@+id/usern"
+            android:id="@+id/levelprompt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter Username"
+            android:text="Level"
             style="@style/text_view"
             android:textSize="18dp"/>
 
-        <EditText
-            android:id="@+id/username"
+        <TextView
+            android:id="@+id/level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:text=""
+            style="@style/edit_text"/>
+
+
+        <TextView
+            android:id="@+id/numCompletedPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Number of Completed Tasks"
+            style="@style/text_view"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/numCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
             style="@style/edit_text"/>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tonextlevelprompt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter Email"
+            android:text="Number of Tasks to Next Level"
             style="@style/text_view"
             android:textSize="18dp"/>
-
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="26dp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            style="@style/edit_text"/>
 
         <TextView
-            android:id="@+id/newPassword"
+            android:id="@+id/numtonextlevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter New Password"
-            style="@style/text_view"
-            android:textSize="18dp"/>
-
-        <EditText
-            android:id="@+id/newPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            style="@style/edit_text"/>
-
-        <TextView
-            android:id="@+id/confirmedNewPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Confirm New Password"
-            style="@style/text_view"
-            android:textSize="18dp"/>
-
-        <EditText
-            android:id="@+id/confirmedNewPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
+            android:text=""
             style="@style/edit_text"/>
 
         <Button
-            android:id="@+id/submit"
+            android:id="@+id/toCatShop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register"
+            android:text="Cat Shop"
             style="@style/button_back"
-            android:onClick="onRegisterClick"/>
+            android:onClick="onShopClick"/>
+
+        <Button
+            android:id="@+id/todolist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back to To Do List"
+            style="@style/button_back"
+            android:onClick="onBackClick"/>
+
 
     </LinearLayout>
 </RelativeLayout>

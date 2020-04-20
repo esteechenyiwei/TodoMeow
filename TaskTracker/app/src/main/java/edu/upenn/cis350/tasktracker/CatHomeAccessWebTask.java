@@ -11,8 +11,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class LoginAccessWebTask extends AsyncTask<URL, String, String> {
-
+public class CatHomeAccessWebTask extends AsyncTask<URL, String, String> {
+    @Override
     protected String doInBackground(URL... urls) {
         try {
             // get the first URL from the array
@@ -29,11 +29,16 @@ public class LoginAccessWebTask extends AsyncTask<URL, String, String> {
             Scanner in = new Scanner(url.openStream());
 
             String msg = in.nextLine();
-            System.out.println("msg");
+           // System.out.println("msg");
             JSONObject jo = new JSONObject(msg);
             String status = jo.getString("status");
-            System.out.println("status");
-            System.out.println(jo.getString("message"));
+            if (status.equals("success")) {
+                return status;
+            } else {
+                return jo.getString("message");
+            }
+
+            //System.out.println("status");
             /**
              * Estee's note to Jasmine: I added this so the error message can be
              * displayed, easier for debug. The logic is that if the status is
@@ -41,11 +46,6 @@ public class LoginAccessWebTask extends AsyncTask<URL, String, String> {
              * returned json object is returned.
              */
 
-            if (status.equals("success")) {
-                return status;
-            } else {
-                return jo.getString("message");
-            }
         } catch (ProtocolException e) {
             e.printStackTrace();
             return e.toString();
@@ -57,13 +57,4 @@ public class LoginAccessWebTask extends AsyncTask<URL, String, String> {
             return e.toString();
         }
     }
-
-
-
-    protected void onPostExecute(String msg) {
-        // not implemented but you can use this if you’d like
-    }
-
 }
-
-

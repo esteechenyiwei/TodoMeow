@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_bottom_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_top_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context=".CatShopActivity"
+    android:background="#D8E0BB">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="203dp"
+            android:layout_height="225dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/cathome" />
+
+
+        <Button
+            android:id="@+id/toCatHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cat Home"
+            style="@style/button_back"
+            android:onClick="onHomeClick"/>
+
+        <Button
+            android:id="@+id/todolist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back to To Do List"
+            style="@style/button_back"
+            android:onClick="onBackClick"/>
+
+
+    </LinearLayout>
+</RelativeLayout>
