@@ -1,38 +1,67 @@
-<!--
-<div class="row mt-5">
-  <div class="col-md-6 m-auto">
-    <div class="card card-body text-center">
-      <h1><i class="fab fa-node-js fa-3x"></i></h1>
-      <p>Create an account or login</p>
-      <a href="/users/register" class="btn btn-primary btn-block mb-2"
-        >Register</a
-      >
-      <a href="/users/login" class="btn btn-secondary btn-block">Login</a>
-    </div>
-  </div>
-</div>
-
--->
-
-
-
 <!DOCTYPE html>
 
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="welcome.css">
-  </head>
+<head>
+  <title>Welcome</title>
+  
 
-  <body>
-    <form class = "box" action="/" method="POST">
+  <style>
+    body{
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f1e4da;
+    }
+
+    .box{
+        width: 300px;
+        padding: 40px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #ffffff;
+        text-align: center;
+    }
+    .box h1{
+        color: #f4acb7;
+        text-transform: uppercase;
+        font-weight: 500;
+        font: sans-serif;
+    }
+
+    .box input[type="button"] {
+        border:0;
+        background: none;
+        display: block;
+        margin: 20px auto;
+        text-align: center;
+        font: sans-serif;
+        border: 2px solid #f4acb7;
+        padding: 14px 10px;
+        width: 200px;
+        outline: none;
+        color: black;
+        border-radius: 24px;
+        transition: 0.25s;
+        cursor: pointer;
+    }
+
+    .box input[type = "button"]:hover{
+        background: #f1e4da;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class = "box">
+    <form action="/" method="POST">
       <h1>Welcome</h1>
-      <a href="/users/register">Create an Account</a>
-      <a href="/users/login">Login</a>
+      <a href="/users/register" class="button">Create an Account</a>
+      <a href="/users/login" class="button">Login</a>
   </form>
+  </div>
 
   </body>
-
 </html>
 
