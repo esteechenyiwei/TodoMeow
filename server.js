@@ -524,7 +524,7 @@ app.use('/getnumcompleted', (req, res) => {
  */
 
 
-app.get("/", checkAuthenticated, function (req, res) {
+  app.get("/", checkAuthenticated, function (req, res) {
     res.render("views/index", { tasks: tasks});
   });
   
@@ -714,6 +714,22 @@ app.use('/', (req, res) => {
 /**
  * 
  * Iteration 2: web -> rank the users by the # of tasks completed
+ */
+
+app.use('/getrankbytasks', (req, res) => {
+    var username = req.query.username;
+    User.find({}).sort({ numCompleted: -1}).exec().addBack((err, docs) => {
+        if (err) {
+            console.log("error occurred during getting ranks by tasks");
+        } else {
+            res.json(docs);
+        }
+    });
+})
+
+/**
+ * 
+ * Iteration 2: web -> rank the users by the level of his cat
  */
 
 app.use('/getrankbytasks', (req, res) => {
