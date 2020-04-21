@@ -76,15 +76,15 @@
     }
 
     .list p {
-      margin-left: 45px;
       font-size: medium;
       color: rgba(0, 0, 0, 0.6);
     }
 
     .list span {
       position: relative;
-      font-weight: 350;
-      left: 40px;
+      font-weight: 400;
+      font-size: large;
+      left: 10px;
       transition: 0.5s;
     }
 
@@ -227,19 +227,25 @@
   <div class="list">
     <% for(var i=tasks.length-1; i >= 0; i--) { %>
     <label>
-      <form action="/task" method="get">
-        <input type="checkbox" name="" />
-        <i></i>
-        <input name="title" value="<%= tasks[i].title%>" type="hidden">
-        <input name="desc" value="<%= tasks[i].desc%>" type="hidden">
-        <input name="deadline" value="<%= tasks[i].deadline%>" type="hidden">
-        <span><%= tasks[i].title%></input></span>
-        <p>description: <%= tasks[i].desc %>
+      <form action="/complete" method="get">
+        <p>
+          <button type="submit" class="bg-transparent nav-item btn" href="#" name=""><i></i></button>
+          <input name="title" value="<%= tasks[i].title%>" type="hidden"></input>
+          <input name="desc" value="<%= tasks[i].desc%>" type="hidden"></input>
+          <input name="deadline" value="<%= tasks[i].deadline%>" type="hidden"></input>
+          <span><%= tasks[i].title%></span>
+          <br>
+          description: <%= tasks[i].desc %>
           <br>
           <small>deadline: <%= tasks[i].deadline %></small>
-          <button type="submit" class="text-muted btn float-right nav-item" href="#" role="button">
-            Edit
-          </button>
+      </form>
+      <form action="/task" method="get">
+        <input name="title" value="<%= tasks[i].title%>" type="hidden"></input>
+        <input name="desc" value="<%= tasks[i].desc%>" type="hidden"></input>
+        <input name="deadline" value="<%= tasks[i].deadline%>" type="hidden"></input>
+        <button type="submit" class="text-muted btn float-right nav-item" href="#" role="button">
+          Edit
+        </button>
         </p>
         <br>
       </form>

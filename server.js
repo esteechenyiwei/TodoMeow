@@ -374,7 +374,7 @@ app.use("/addtask", (req, res) => {
         person.save((err, product) => {
           if (err) {
             res.json({ status: "error in saving person" });
-            console.log("error in saving task in add");
+            console.log("error in saving person");
           } else {
             res.json({ status: "success" });
           }
@@ -414,42 +414,6 @@ app.use("/edittask", (req, res) => {
           status: "success",
           message: "",
         });
-      }
-    }
-  );
-});
-
-app.use("/delete", (req, res) => {
-  var username = req.query.username;
-  var title = req.query.title;
-  var newTask = new Todo({
-    title: title,
-  });
-  User.findOneAndUpdate(
-    {
-      name: username,
-    },
-    {
-      $and: [
-        { $pull: { currentTodos: { title: title } } },
-        { $inc: { numCompleted: 1 } },
-        { $push: { completedTodos: newTask } },
-      ],
-    },
-    (err, person) => {
-      if (err) {
-        res.json({
-          status: "error",
-          message: "dbError",
-        });
-        console.log("error in adding task");
-      } else if (!person) {
-        res.json({
-          status: "error",
-          message: "no such person",
-        });
-      } else {
-        res.json({ status: "success" });
       }
     }
   );
@@ -713,6 +677,48 @@ app.get("/task", ensureAuthenticated, function (req, res) {
   );
 });
 
+app.get("/complete", ensureAuthenticated, (req, res) => {
+  var username = req.user.name;
+  var title = req.query.title;
+  var desc = req.query.desc;
+  var ddl = req.query.deadline;
+  var newTask = new Todo({
+    title: title,
+    desc: desc,
+    deadline: ddl,
+    completed: true,
+  });
+  User.findOneAndUpdate(
+    {
+      name: username,
+    },
+    {
+      $pull: { currentTodos: { title: title, desc: desc } },
+      $inc: { numCompleted: 1 },
+      $push: { completedTodos: newTask },
+    },
+    (err, person) => {
+      if (err) {
+        res.json({
+          status: "error",
+          message: "dbError",
+        });
+        console.log("error in adding task");
+      } else if (!person) {
+        res.json({
+          status: "error",
+          message: "no such person",
+        });
+      } else {
+        tasks = person.currentTodos;
+        console.log("completed:" + person.numCompleted);
+        res.redirect("/dashboard");
+        //res.render("index", { tasks: tasks });
+      }
+    }
+  );
+});
+
 //get rankings: db + http request & response
 app.get("/rankings", ensureAuthenticated, function (req, res) {
   let rankings = [
@@ -760,45 +766,6 @@ app.get("/remove", ensureAuthenticated, function (req, res) {
       console.log("succeeded in deleting task and saving, redirects to index");
     }
   };
-});
-
-app.post("/delete/:username/:title", function (req, res) {
-  var username = req.params.username;
-  var title = req.params.title;
-  console.log(username);
-  console.log(title);
-  var newTask = new Todo({
-    title: title,
-    desc: description,
-    deadline: deadline,
-    currDate: now,
-  });
-  User.findOneAndUpdate(
-    {
-      name: username,
-    },
-    {
-      $and: [
-        { $pull: { currentTodos: { title: title } } },
-        { $inc: { numCompleted: 1 } },
-        { $push: { completedTodos: newTask } },
-      ],
-    },
-    (err, person) => {
-      if (err) {
-        res.redirect("/dashboard");
-        console.log("error in  deleting task");
-      } else if (!person) {
-        res.redirect("/dashboard");
-        console.log("no such person, error in getting user info");
-      } else {
-        res.redirect("/dashboard");
-        console.log(
-          "succeeded in deleting task and saving, redirects to index"
-        );
-      }
-    }
-  );
 });
 
 /**
