@@ -429,14 +429,11 @@ app.use("/delete", (req, res) => {
     {
       name: username,
     },
-    // {
-    //   $and: [
-    { $pull: { currentTodos: { title: title } } },
-    { multi: false },
-    // { $inc: { numCompleted: 1 } },
-    // { $push: { completedTodos: newTask } },
-    //   ],
-    // },
+    {
+      $pull: { currentTodos: { title: title} },
+      $inc: { numCompleted: 1 },
+      $push: { completedTodos: newTask },
+    },
     (err, person) => {
       if (err) {
         res.json({
