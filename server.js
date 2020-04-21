@@ -419,6 +419,49 @@ app.use("/edittask", (req, res) => {
   );
 });
 
+app.use("/delete", (req, res) => {
+  var username = req.query.username;
+  var title = req.query.title;
+  var newTask = new Todo({
+    title: title,
+  });
+  User.findOneAndUpdate(
+    {
+      name: username,
+    },
+    // {
+    //   $and: [
+    { $pull: { currentTodos: { title: title } } },
+    { multi: false },
+    // { $inc: { numCompleted: 1 } },
+    // { $push: { completedTodos: newTask } },
+    //   ],
+    // },
+    (err, person) => {
+      if (err) {
+        res.json({
+          status: "error",
+          message: "dbError",
+        });
+        console.log("error in adding task");
+      } else if (!person) {
+        res.json({
+          status: "error",
+          message: "no such person",
+        });
+        console.log("no such person in complete task request");
+      } else {
+        res.json({ status: "success" });
+        console.log(
+          "succeeded in complete task request, my current todos is: "
+        );
+        console.log(person);
+        console.log(person.currentTodos);
+      }
+    }
+  );
+});
+
 /**
  *
  * Iteration 2: Android -> get the number of completed tasks
