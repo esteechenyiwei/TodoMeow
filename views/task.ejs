@@ -3,89 +3,92 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
+  <meta charset="utf-8" />
 
-    <title>TodoMoew</title>
-    <script src="https://code.jquery.com/jquery-1.12.3.min.js"
-        integrity="sha384-ugqypGWrzPLdx2zEQTF17cVktjb01piRKaDNnbYGRSxyEoeAm+MKZVtbDUYjxfZ6"
-        crossorigin="anonymous"></script>
-    <meta name="description" content="a Todo App to Collect Cats" />
-    <meta name="author" content="BBBB" />
+  <title>TodoMoew</title>
+  <script src="https://code.jquery.com/jquery-1.12.3.min.js"
+    integrity="sha384-ugqypGWrzPLdx2zEQTF17cVktjb01piRKaDNnbYGRSxyEoeAm+MKZVtbDUYjxfZ6"
+    crossorigin="anonymous"></script>
+  <meta name="description" content="a Todo App to Collect Cats" />
+  <meta name="author" content="BBBB" />
 
-    <link rel="stylesheet" href="index.css" type="text/css" />
+  <link rel="stylesheet" href="index.css" type="text/css" />
 
-    <style>
-        body {
-  justify-content: center;
-  align-items: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100vh;
-}
+  <style>
+    body {
+      justify-content: center;
+      align-items: center;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+    }
 
-.list {
-  padding: 1% 75px 10px 30px;
-  margin-left: 10%;
-  margin-right: 10%;
-  position: relative;
-  background: #f1e4da;
-  overflow-wrap: break-word;
-  border-radius: 5%;
-  /* border: 1px dotted;
+    .list {
+      padding: 1% 75px 10px 30px;
+      margin-left: 10%;
+      margin-right: 10%;
+      position: relative;
+      background: #f1e4da;
+      overflow-wrap: break-word;
+      border-radius: 5%;
+      /* border: 1px dotted;
   border-color: #ee9ca8;
   box-shadow: #d6949d; */
-}
+    }
 
-.list label {
-  position: relative;
-  display: block !important;
-  margin: 3% 20%;
-  color: rgb(95, 95, 95);
-  font-size: 18px;
-  cursor: pointer;
-  font-weight: lighter;
-  /* border: 0.5px solid #fff; */
-  border-radius: 3px;
-  border-spacing: 5px;
-  overflow-wrap: break-word;
-}
+    .list label {
+      position: relative;
+      display: block !important;
+      margin: 3% 20%;
+      color: rgb(95, 95, 95);
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: lighter;
+      /* border: 0.5px solid #fff; */
+      border-radius: 3px;
+      border-spacing: 5px;
+      overflow-wrap: break-word;
+    }
 
-/* .list label:hover {
+    /* .list label:hover {
   background: rgba(0, 0, 0, 0.1);
 } */
 
-.list input[type="checkbox"] {
-  -webkit-appearance: none;
-}
+    .list input[type="checkbox"] {
+      -webkit-appearance: none;
+    }
 
-.list i {
-  position: absolute;
-  top: 3px;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 1.5px solid #ffffff;
-}
+    .list i {
+      position: absolute;
+      top: 3px;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid #ffffff;
+    }
 
-.list input[type="checkbox"]:checked ~ i {
-  top: 1px;
-  border-top: none;
-  border-right: none;
-  width: 25px;
-  height: 15px;
-  transform: rotate(-45deg);
-}
-.list p {
-  margin-left: 45px;
-  font-size: medium;
-  color: rgba(0, 0, 0, 0.6);
-}
-.list span {
-  position: relative;
-  font-weight: 350;
-  left: 40px;
-  transition: 0.5s;
-}
-/* 
+    .list input[type="checkbox"]:checked~i {
+      top: 1px;
+      border-top: none;
+      border-right: none;
+      width: 25px;
+      height: 15px;
+      transform: rotate(-45deg);
+    }
+
+    .list p {
+      margin-left: 45px;
+      font-size: medium;
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    .list span {
+      position: relative;
+      font-weight: 350;
+      left: 40px;
+      transition: 0.5s;
+    }
+
+    /* 
 .list span:before {
   content: "";
   position: absolute;
@@ -105,136 +108,135 @@
   transition: transform 0.5s; 
 } */
 
-#but {
-  background-color: #f1e4da;
-  border-color: #f1e4da;
-}
+    #but {
+      background-color: #f1e4da;
+      border-color: #f1e4da;
+    }
 
-.list input[type="checkbox"]:checked ~ span {
-  text-decoration: line-through;
-}
-.input {
-  margin-bottom: 1pt;
-}
+    .list input[type="checkbox"]:checked~span {
+      text-decoration: line-through;
+    }
 
-.jumbotron {
-  background-image: url("paw.png");
-  background-size: 70%;
-  background-position-x: center;
-  background-position-y: 15%;
-  background-repeat: no-repeat;
-  text-align: center;
-  background-color: #faf1ea !important;
-}
+    .input {
+      margin-bottom: 1pt;
+    }
 
-.lead {
-  color: black !important;
-  opacity: 100%;
-}
+    .jumbotron {
+      background-image: url("paw.png");
+      background-size: 70%;
+      background-position-x: center;
+      background-position-y: 15%;
+      background-repeat: no-repeat;
+      text-align: center;
+      background-color: #faf1ea !important;
+    }
 
-h1 {
-  color: black !important;
-  opacity: 100%;
-}
+    .lead {
+      color: black !important;
+      opacity: 100%;
+    }
 
-.btn-info {
-  background-color: #f4acb7 !important;
-  border-color: #f8bac5 !important;
-  border-width: 2pt !important;
-  background-image: url("paw.png") !important;
-  outline: 0pt !important;
-}
+    h1 {
+      color: black !important;
+      opacity: 100%;
+    }
 
-.btn-info:hover {
-  background-color: #ee9ca8 !important;
-  border-color: #f4acb7 !important;
-  border-width: 2pt !important;
-  background-image: url("paw.png") !important;
-}
+    .btn-info {
+      background-color: #f4acb7 !important;
+      border-color: #f8bac5 !important;
+      border-width: 2pt !important;
+      background-image: url("paw.png") !important;
+      outline: 0pt !important;
+    }
 
-.btn-info:focus {
-  background-color: #ffdde2 !important;
-  border-color: #d6949d !important;
-  border-width: 2pt !important;
-  outline: 0pt !important;
-}
+    .btn-info:hover {
+      background-color: #ee9ca8 !important;
+      border-color: #f4acb7 !important;
+      border-width: 2pt !important;
+      background-image: url("paw.png") !important;
+    }
 
-    </style>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    .btn-info:focus {
+      background-color: #ffdde2 !important;
+      border-color: #d6949d !important;
+      border-width: 2pt !important;
+      outline: 0pt !important;
+    }
+  </style>
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(241, 228, 218, 0.4);">
-        <a class="navbar-brand" href="#">ToDoMoew</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(241, 228, 218, 0.4);">
+    <a class="navbar-brand" href="#">ToDoMoew</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/tasks">
-                        Tasks <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/catrankings">Cats</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/rankings">Rankings</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/users/logout" class="btn btn-secondary">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="jumbotron">
-        <div class="mx-auto" style="width: 50%;">
-            <h1 class="display-4">TodoMoew</h1>
-            <hr class="my-4" />
-            <p class="lead">
-                Edit Task
-            </p>
-        </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/tasks">
+            Tasks <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/catrankings">Cats</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/rankings">Rankings</a>
+        </li>
+        <li class="nav-item">
+          <a href="/users/logout" class="btn btn-secondary">Logout</a>
+        </li>
+      </ul>
     </div>
-    <div class="list my-4 py-4">
-        <form id="form input" method="POST" action="/dashboard">
-            <div class="form-group my-4">
-                <input type="text" name="title" value="<%= title %>" class="form-control" placeholder="enter task name"
-                    style="background-color: rgba(255, 255, 255, 0.4);" id="exampleFormControlInput1" />
-            </div>
-            <div class="form-group">
-                <textarea rows="5" type="text" name="desc" class="form-control"
-                    style="background-color: rgba(255, 255, 255, 0.4);" id="exampleFormControlInput1"
-                    placeholder="enter description"><%= desc %></textarea>
-            </div>
-            <div class="form-group">
-                <textarea type="text" name="deadline" class="form-control" id="exampleFormControlInput1"
-             style="background-color: rgba(255, 255, 255, 0.4);" placeholder="enter deadline"><%= ddl %></textarea>
-            </div>
-            <button type="submit" class="btn btn-info btn-lg pawBtn" href="#" role="button">
-                Submit
-            </button>
-            <button type="submit" class="nav-link text-secondary" style="background-color:transparent; border-width: 0px;" href="#" role="button"><u>Back</u></button>
-        </form>
+  </nav>
 
-        <a class="nav-link text-secondary" href="/tasks"><u>Back</u></a>
+  <div class="jumbotron">
+    <div class="mx-auto" style="width: 50%;">
+      <h1 class="display-4">TodoMoew</h1>
+      <hr class="my-4" />
+      <p class="lead">
+        Edit Task
+      </p>
     </div>
+  </div>
+  <div class="list my-4 py-4">
+    <form id="form input" method="POST" action="/dashboard">
+      <div class="form-group my-4">
+        <input type="text" name="title" value="<%= title %>" class="form-control" placeholder="enter task name"
+          style="background-color: rgba(255, 255, 255, 0.4);" id="exampleFormControlInput1" />
+      </div>
+      <div class="form-group">
+        <textarea rows="5" type="text" name="desc" class="form-control"
+          style="background-color: rgba(255, 255, 255, 0.4);" id="exampleFormControlInput1"
+          placeholder="enter description"><%= desc %></textarea>
+      </div>
+      <div class="form-group">
+        <textarea type="text" name="deadline" class="form-control" id="exampleFormControlInput1"
+          style="background-color: rgba(255, 255, 255, 0.4);" placeholder="enter deadline"><%= ddl %></textarea>
+      </div>
+      <button type="submit" class="btn btn-info btn-lg pawBtn" href="#" role="button">
+        Submit
+      </button>
+      <button type="submit" class="nav-link text-secondary" style="background-color:transparent; border-width: 0px;"
+        href="#" role="button"><u>Back</u></button>
+    </form>
+  </div>
 
-    <script src="js/scripts.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+  <script src="js/scripts.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 
 </body>
 
