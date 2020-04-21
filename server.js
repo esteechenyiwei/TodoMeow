@@ -692,7 +692,7 @@ app.post("/dashboard", urlencodedParser, function (req, res) {
 
 //edit task
 app.get("/task", ensureAuthenticated, function (req, res) {
-  var username = req.user.name;
+  var username = req.body.name;
   var title = req.query.title;
   var desc = req.query.desc;
   var ddl = req.query.deadline;
@@ -714,7 +714,7 @@ app.get("/task", ensureAuthenticated, function (req, res) {
         console.log("no such person, error in getting user info");
       } else {
         console.log("succeeded in display the task");
-        res.render("task", { title: title, desc: desc, ddl: ddl });
+        res.render("views/task", { title: title, desc: desc, ddl: ddl });
       }
     }
   );
