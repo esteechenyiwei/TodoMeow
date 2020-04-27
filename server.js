@@ -442,12 +442,13 @@ app.get("/deleteCurr", (req, res) => {
   var username = req.user.name;
   var title = req.query.title;
   var desc = req.query.desc;
+  var ddl = req.query.ddl;
   User.findOneAndUpdate(
     {
       name: username,
     },
     {
-      $pull: { currentTodos: { title: title } },
+      $pull: { currentTodos: { title: title, desc: desc, deadline: ddl } },
     },
     (err, person) => {
       if (err) {
@@ -473,12 +474,13 @@ app.get("/deleteComp", (req, res) => {
   var username = req.user.name;
   var title = req.query.title;
   var desc = req.query.desc;
+  var ddl = req.query.ddl;
   User.findOneAndUpdate(
     {
       name: username,
     },
     {
-      $pull: { completedTodos: { title: title, desc: desc } },
+      $pull: { completedTodos: { title: title, desc: desc, deadline: ddl } },
     },
     (err, person) => {
       if (err) {
@@ -829,7 +831,7 @@ app.get("/complete", ensureAuthenticated, (req, res) => {
       name: username,
     },
     {
-      $pull: { currentTodos: { title: title, desc: desc } },
+      $pull: { currentTodos: { title: title, desc: desc, deadline: ddl } },
       $inc: { numCompleted: 1 },
       $push: { completedTodos: newTask },
     },

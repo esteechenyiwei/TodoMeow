@@ -235,7 +235,8 @@
           <input name="desc" value="<%= tasks[i].desc%>" type="hidden"></input>
           <input name="deadline" value="<%= tasks[i].deadline%>" type="hidden"></input>
           <span><%= tasks[i].title%><a class="close text-muted"
-              href="deleteCurr?title=<%= tasks[i].title%>&desc=<%= tasks[i].desc%>">x</a> </span>
+              href="deleteCurr?title=<%= tasks[i].title%>&desc=<%= tasks[i].desc%>&ddl=<%= tasks[i].deadline%>">x</a>
+          </span>
           <br>
           description: <%= tasks[i].desc %>
           <br>
@@ -262,7 +263,8 @@
     <label>
       √<span style="text-decoration:line-through;">
         <%= completed[i].title%> <a class="close text-muted"
-          href="deleteComp?title=<%= completed[i].title%>&desc=<%= completed[i].desc%>">x</a> </span>
+          href="deleteComp?title=<%= completed[i].title%>&desc=<%= completed[i].desc%>&ddl=<%= completed[i].deadline%>">x</a>
+      </span>
       <br>
       description: <%= completed[i].desc %>
       <br>
