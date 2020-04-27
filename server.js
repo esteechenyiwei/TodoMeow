@@ -430,7 +430,7 @@ app.use("/delete", (req, res) => {
       name: username,
     },
     {
-      $pull: { currentTodos: { title: title} },
+      $pull: { currentTodos: { title: title } },
       $inc: { numCompleted: 1 },
       $push: { completedTodos: newTask },
     },
@@ -612,7 +612,11 @@ app.get("/dashboard", ensureAuthenticated, function (req, res) {
         res.render("index", { tasks: tasks });
       } else {
         tasks = person.currentTodos;
-        res.render("index", { tasks: tasks });
+        res.render("index", {
+          tasks: person.currentTodos,
+          completed: person.completedTodos,
+        });
+        //res.render("index", { tasks: tasks });
       }
     }
   );
@@ -752,7 +756,6 @@ app.get("/complete", ensureAuthenticated, (req, res) => {
         tasks = person.currentTodos;
         console.log("completed:" + person.numCompleted);
         res.redirect("/dashboard");
-        //res.render("index", { tasks: tasks });
       }
     }
   );
