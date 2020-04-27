@@ -403,7 +403,7 @@ app.use("/edittask", (req, res) => {
       name: user,
     },
     {
-      $pull: { currentTodos: { title: orgtitle } }
+      $pull: { currentTodos: { title: orgtitle } },
     },
     (err, person) => {
       console.log("user name:" + user);
@@ -422,7 +422,6 @@ app.use("/edittask", (req, res) => {
           message: "no such person",
         });
         console.log("error in edit: no such person");
-        
       } else {
         person.currentTodos.push(newTask);
         console.log(person.currentTodos);
@@ -512,45 +511,42 @@ app.use("/getnumcompleted", (req, res) => {
   );
 });
 
-
 /**
  *
  * Iteration 3: Android Cat Shop Item List
  */
 
+//list of food to display
 
- //list of food to display 
-
- var coke = new Food({
-   name: 'coke',
-   cost: 3,
-   function: 'makes your cat energetic again! boosts health level by 3',
-   boosts: 3
- })
- var chocolateChip = new Food({
-  name: 'chocolate chip',
+var coke = new Food({
+  name: "coke",
+  cost: 3,
+  function: "makes your cat energetic again! boosts health level by 3",
+  boosts: 3,
+});
+var chocolateChip = new Food({
+  name: "chocolate chip",
   cost: 5,
-  function: 'Very sweet, boosts exp level by 3!',
-  boosts: 5
-})
+  function: "Very sweet, boosts exp level by 3!",
+  boosts: 5,
+});
 var crab = new Food({
-  name: 'Alaskan Crab Meat',
+  name: "Alaskan Crab Meat",
   cost: 10,
-  function: 'The ultimate food. The real gourmet. boosts cat exp level by 10',
-  boosts: 10
-})
+  function: "The ultimate food. The real gourmet. boosts cat exp level by 10",
+  boosts: 10,
+});
 
 var lobster = new Food({
-  name: 'lobster',
+  name: "lobster",
   cost: 5,
-  function: 'upgrades your cat directly up a level!',
-  boosts: 9
-})
+  function: "upgrades your cat directly up a level!",
+  boosts: 9,
+});
 coke.save();
 chocolateChip.save();
 crab.save();
 lobster.save();
-
 
 app.get("/shop", (req, res) => {
   Food.find({}, (err, document) => {
@@ -562,11 +558,8 @@ app.get("/shop", (req, res) => {
       res.json(document);
       console.log("success");
     }
-  })
-
-})
-
-
+  });
+});
 
 /**
  *
@@ -692,7 +685,6 @@ app.get("/dashboard", ensureAuthenticated, function (req, res) {
           tasks: person.currentTodos,
           completed: person.completedTodos,
         });
-        //res.render("index", { tasks: tasks });
       }
     }
   );
