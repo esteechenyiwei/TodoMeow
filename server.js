@@ -753,7 +753,10 @@ app.post("/dashboard", urlencodedParser, function (req, res) {
             console.log("succeeded in adding task and saving");
           }
         });
-        res.render("index", { tasks: person.currentTodos });
+        res.render("index", {
+          tasks: person.currentTodos,
+          completed: person.completedTodos,
+        });
       }
     }
   );
@@ -821,8 +824,6 @@ app.get("/complete", ensureAuthenticated, (req, res) => {
           message: "no such person",
         });
       } else {
-        tasks = person.currentTodos;
-        console.log("completed:" + person.numCompleted);
         res.redirect("/dashboard");
       }
     }
