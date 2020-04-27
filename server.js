@@ -384,35 +384,55 @@ app.use("/addtask", (req, res) => {
   );
 });
 
+//android edit function
 app.use("/edittask", (req, res) => {
-  var person = req.query.username;
-  var title = req.query.orgtitle;
+  var user = req.query.username;
+  var orgtitle = req.query.orginaltitle;
   var newdesc = req.query.desc;
-  var newdeadline = req.query.desc;
+  var newdeadline = req.query.deadline;
   var newtitle = req.query.title;
 
-  Todo.findOneAndUpdate(
+  var newTask = new Todo({
+    title: newtitle,
+    desc: newdesc,
+    // deadline: newdeadline,
+  });
+
+  User.findOneAndUpdate(
     {
-      name: person,
+      name: user,
     },
     {
-      $set: [{ desc: newdesc }, { deadline: newdeadline }, { title: newtitle }],
+      $pull: { currentTodos: { title: orgtitle } }
     },
     (err, person) => {
+      console.log("user name:" + user);
+      console.log("original title:" + orgtitle);
+      console.log("new title:" + newtitle);
+      console.log("description:" + newdesc);
       if (err) {
         res.json({
           status: "error",
           message: "dbError",
         });
+        console.log("error in edit");
       } else if (!person) {
         res.json({
           status: "error",
-          message: "no such title",
+          message: "no such person",
         });
+        console.log("error in edit: no such person");
+        
       } else {
-        res.json({
-          status: "success",
-          message: "",
+        person.currentTodos.push(newTask);
+        console.log(person.currentTodos);
+        person.save((err, product) => {
+          if (err) {
+            res.json({ status: "error in saving person in edit" });
+            console.log("error in saving person in edit");
+          } else {
+            res.json({ status: "success" });
+          }
         });
       }
     }
@@ -491,6 +511,62 @@ app.use("/getnumcompleted", (req, res) => {
     }
   );
 });
+
+
+/**
+ *
+ * Iteration 3: Android Cat Shop Item List
+ */
+
+
+ //list of food to display 
+
+ var coke = new Food({
+   name: 'coke',
+   cost: 3,
+   function: 'makes your cat energetic again! boosts health level by 3',
+   boosts: 3
+ })
+ var chocolateChip = new Food({
+  name: 'chocolate chip',
+  cost: 5,
+  function: 'Very sweet, boosts exp level by 3!',
+  boosts: 5
+})
+var crab = new Food({
+  name: 'Alaskan Crab Meat',
+  cost: 10,
+  function: 'The ultimate food. The real gourmet. boosts cat exp level by 10',
+  boosts: 10
+})
+
+var lobster = new Food({
+  name: 'lobster',
+  cost: 5,
+  function: 'upgrades your cat directly up a level!',
+  boosts: 9
+})
+coke.save();
+chocolateChip.save();
+crab.save();
+lobster.save();
+
+
+app.get("/shop", (req, res) => {
+  Food.find({}, (err, document) => {
+    if (err) {
+      console.log("error in getting food");
+    } else if (!document) {
+      console.log("no document");
+    } else {
+      res.json(document);
+      console.log("success");
+    }
+  })
+
+})
+
+
 
 /**
  *
