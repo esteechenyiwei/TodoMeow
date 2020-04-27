@@ -438,20 +438,16 @@ app.use("/edittask", (req, res) => {
   );
 });
 
-app.use("/delete", (req, res) => {
-  var username = req.query.username;
+app.get("/deleteCurr", (req, res) => {
+  var username = req.user.name;
   var title = req.query.title;
-  var newTask = new Todo({
-    title: title,
-  });
+  var desc = req.query.desc;
   User.findOneAndUpdate(
     {
       name: username,
     },
     {
       $pull: { currentTodos: { title: title } },
-      $inc: { numCompleted: 1 },
-      $push: { completedTodos: newTask },
     },
     (err, person) => {
       if (err) {
@@ -467,12 +463,38 @@ app.use("/delete", (req, res) => {
         });
         console.log("no such person in complete task request");
       } else {
-        res.json({ status: "success" });
-        console.log(
-          "succeeded in complete task request, my current todos is: "
-        );
-        console.log(person);
-        console.log(person.currentTodos);
+        res.redirect("/dashboard");
+      }
+    }
+  );
+});
+
+app.get("/deleteComp", (req, res) => {
+  var username = req.user.name;
+  var title = req.query.title;
+  var desc = req.query.desc;
+  User.findOneAndUpdate(
+    {
+      name: username,
+    },
+    {
+      $pull: { completedTodos: { title: title, desc: desc } },
+    },
+    (err, person) => {
+      if (err) {
+        res.json({
+          status: "error",
+          message: "dbError",
+        });
+        console.log("error in adding task");
+      } else if (!person) {
+        res.json({
+          status: "error",
+          message: "no such person",
+        });
+        console.log("no such person in complete task request");
+      } else {
+        res.redirect("/dashboard");
       }
     }
   );
