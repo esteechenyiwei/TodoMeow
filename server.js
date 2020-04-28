@@ -567,10 +567,10 @@ var lobster = new Food({
   function: "upgrades your cat directly up a level!",
   boosts: 9,
 });
-coke.save();
-chocolateChip.save();
-crab.save();
-lobster.save();
+// coke.save();
+// chocolateChip.save();
+// crab.save();
+// lobster.save();
 
 app.get("/shop", (req, res) => {
   Food.find({}, (err, document) => {
@@ -579,8 +579,9 @@ app.get("/shop", (req, res) => {
     } else if (!document) {
       console.log("no document");
     } else {
-      res.json(document);
+      res.render("shop", {foods: document});
       console.log("success");
+      console.log("items in the shop: " + document);
     }
   });
 });
