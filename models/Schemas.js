@@ -53,7 +53,7 @@ var userSchema = new Schema({
     name: { type: String, default: "Meow" },
     level: { type: Number, min: 0, default: 0 },
     health: { type: Number, default: 10 },
-    appearance: { type: String, default: "" },
+    appearance: { type: String, default: "" }
   }),
   petLevel: { type: Number, min: 0, default: 0 },
   myFoods: { type: [foodSchema], default: [] },

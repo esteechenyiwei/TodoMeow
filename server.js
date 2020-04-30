@@ -709,6 +709,8 @@ app.get("/dashboard", ensureAuthenticated, function (req, res) {
         res.render("index", {
           tasks: person.currentTodos,
           completed: person.completedTodos,
+          level: person.petLevel,
+          coins: person.money,
         });
       }
     }
@@ -735,7 +737,10 @@ app.get("/tasks", ensureAuthenticated, function (req, res) {
         res.render("index", { tasks: tasks });
       } else {
         tasks = person.currentTodos;
-        res.render("index", { tasks: tasks });
+        res.render("index", { tasks: person.currentTodos,
+          completed: person.completedTodos,
+          level: person.petLevel,
+          coins: person.money, });
       }
     }
   );
@@ -781,6 +786,8 @@ app.post("/dashboard", urlencodedParser, function (req, res) {
         res.render("index", {
           tasks: person.currentTodos,
           completed: person.completedTodos,
+          level: person.petLevel,
+          coins: person.money,
         });
       }
     }

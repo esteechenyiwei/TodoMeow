@@ -122,11 +122,6 @@
     }
 
     .jumbotron {
-      background-image: url("views/paw.png");
-      background-size: 70%;
-      background-position-x: center;
-      background-position-y: 15%;
-      background-repeat: no-repeat;
       text-align: center;
       background-color: #faf1ea !important;
     }
@@ -145,7 +140,7 @@
       background-color: #f4acb7 !important;
       border-color: #f8bac5 !important;
       border-width: 2pt !important;
-      background-image: url("paw.png") !important;
+      background-image: url("paw.png");
       outline: 0pt !important;
     }
 
@@ -153,7 +148,7 @@
       background-color: #ee9ca8 !important;
       border-color: #f4acb7 !important;
       border-width: 2pt !important;
-      background-image: url("paw.png") !important;
+      background-image: url("paw.png");
     }
 
     .btn-info:focus {
@@ -179,7 +174,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="/tasks">
+          <a class="nav-link" href="/dashboard">
             Tasks <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
@@ -189,43 +184,51 @@
           <a class="nav-link" href="/rankings">Rankings</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/shop"> Cat Shop </a>
+          <a class="nav-link" href="/shop"> Shop </a>
         </li>
         <li class="nav-item">
           <a href="/users/logout" class="btn btn-secondary">Logout</a>
         </li>
       </ul>
     </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+      <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+              <p class="navbar-brand"> Pet Level: <%= level %> | Coins: <%= coins %></p>
+          </li>
+      </ul>
+  </div>
   </nav>
 
-  <div class="jumbotron">
-    <div class="mx-auto" style="width: 50%;">
-      <h1 class="display-4">TodoMoew</h1>
-      <p class="lead">
-        Get your tasks done with cats!
-      </p>
-      <hr class="my-4" />
-      <form id="form input" method="POST" action="/dashboard">
-        <div class="form-group">
-          <input type="text" name="title" class="form-control" id="exampleFormControlInput1"
-            placeholder="enter task name" />
-        </div>
-        <div class="form-group">
-          <textarea rows="3" type="text" name="desc" class="form-control" id="exampleFormControlInput1"
-            placeholder="enter description"></textarea>
-        </div>
-        <div class="form-group">
-          <textarea type="text" name="deadline" class="form-control" id="exampleFormControlInput1"
-            placeholder="enter deadline (mm/dd/yyyy)"></textarea>
-
-        </div>
-        <button type="submit" class="btn btn-info btn-lg pawBtn" href="#" role="button">
-          ADD
-        </button>
-        <!-- <button type="submit">Add</button> -->
-      </form>
+    <div class="jumbotron">
+      <div class="mx-auto" style="width: 50%;">
+        <h1 class="display-4">TodoMoew</h1>
+        <p class="lead">
+          Get your tasks done with cats!
+        </p>
+        <hr class="my-4" />
+        <form id="form input" method="POST" action="/dashboard">
+          <div class="form-group">
+            <input type="text" name="title" class="form-control" id="exampleFormControlInput1"
+              placeholder="enter task name" />
+          </div>
+          <div class="form-group">
+            <textarea rows="3" type="text" name="desc" class="form-control" id="exampleFormControlInput1"
+              placeholder="enter description"></textarea>
+          </div>
+          <div class="form-group">
+            <textarea type="text" name="deadline" class="form-control" id="exampleFormControlInput1"
+              placeholder="enter deadline (mm/dd/yyyy)"></textarea>
+  
+          </div>
+          <button type="submit" class="btn btn-info btn-lg pawBtn" href="#" role="button">
+            ADD
+          </button>
+          <!-- <button type="submit">Add</button> -->
+        </form>
+      </div>
     </div>
-  </div>
+  
 
   <div class="list">
     <h2 class="text-align font-weight-light">Todo Tasks</h2>
