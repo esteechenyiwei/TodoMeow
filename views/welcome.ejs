@@ -2,8 +2,7 @@
 
 <head>
   <title>Welcome</title>
-  
-
+  <link rel="stylesheet" href="welcome.css" type="text/css" />
   <style>
     body{
         margin: 0;
@@ -12,7 +11,8 @@
         background: #f1e4da;
     }
 
-    .box{
+     .box{
+       border-radius: 25px;
         width: 300px;
         padding: 40px;
         position: absolute;
@@ -21,46 +21,46 @@
         transform: translate(-50%, -50%);
         background: #ffffff;
         text-align: center;
-    }
+     } 
+    
     .box h1{
         color: #f4acb7;
         text-transform: uppercase;
         font-weight: 500;
-        font: sans-serif;
+        font: Verdana;
     }
 
-    .box input[type="button"] {
-        border:0;
-        background: none;
-        display: block;
-        margin: 20px auto;
-        text-align: center;
-        font: sans-serif;
-        border: 2px solid #f4acb7;
-        padding: 14px 10px;
-        width: 200px;
-        outline: none;
-        color: black;
-        border-radius: 24px;
-        transition: 0.25s;
-        cursor: pointer;
+    .button {
+      border: 0;
+      background: none;
+      display: block;
+      margin: 20px auto;
+      text-align: center;
+      font: sans-serif;
+      border: 2px solid #f4acb7;
+      padding: 14px 10px;
+      width: 200px;
+      outline: none;
+      color: grey;
+      border-radius: 24px;
+      transition: 0.25s;
+      cursor: pointer;
     }
 
-    .box input[type = "button"]:hover{
+    .button {
         background: #f1e4da;
     }
 
   </style>
+  
 </head>
 
 <body>
-  <div class = "box">
-    <form action="/" method="POST">
+    <form class = "box" action="/" method="POST">
       <h1>Welcome</h1>
       <a href="/users/register" class="button">Create an Account</a>
       <a href="/users/login" class="button">Login</a>
   </form>
-  </div>
 
   </body>
 </html>

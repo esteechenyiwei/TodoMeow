@@ -13,6 +13,7 @@
     }
 
     .box{
+      border-radius: 25px;
         width: 300px;
         padding: 40px;
         position: absolute;
@@ -27,7 +28,17 @@
         text-transform: uppercase;
         font-weight: 500;
         font: sans-serif;
+        font-size: xx-large;
     }
+
+    .box h2 {
+      color: #f4acb7;
+      text-transform: uppercase;
+      font-weight: 100;
+      font: Verdana;
+      font-size: medium;
+    }
+
     .box input[type = "email"], .box input[type = "password"] {
         border:0;
         background: none;
@@ -97,7 +108,7 @@
       <input type = "email" id="email" name = "email" placeholder="Email" required>
       <input type = "password" id="password" name = "password" placeholder="Password" required>
       <input type="submit" name="login" value="Login">
-      <a href="/users/register">Register</a>
+      <h2>Don't have an account?</h2> <a href="/users/register">Register</a>
   </form>
 
   </body>
