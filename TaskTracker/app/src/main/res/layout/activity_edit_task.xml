@@ -120,7 +120,7 @@
                 android:inputType="text"
                 android:background="@drawable/bginputtask"
                 android:paddingLeft="12dp"
-                android:hint="When is it due? (enter text)"
+                android:hint="When is it due? (enter as mm/dd/yyyy)"
                 android:textColorHint="#B5B5B5"
                 android:textColor="#D9594C"
                 android:layout_width="match_parent"

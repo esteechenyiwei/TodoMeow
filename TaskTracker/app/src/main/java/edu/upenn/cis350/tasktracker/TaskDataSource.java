@@ -1,7 +1,10 @@
 package edu.upenn.cis350.tasktracker;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskDataSource {
 
@@ -22,9 +25,10 @@ public class TaskDataSource {
         try {
             String title = t.getTitle();
             String desc = t.getDesc();
-            String deadline = t.getDeadline();
+            String ddldate = t.getDeadline();
+
             URL url = new URL("http://10.0.2.2:3000/addtask?username=" + inputusername +
-                    "&title=" + title + "&desc=" + desc + "&deadline=" + deadline);
+                    "&title=" + title + "&desc=" + desc + "&deadline=" + ddldate);
             LoginAccessWebTask task = new LoginAccessWebTask();
             task.execute(url);
             String a = task.get();
@@ -39,10 +43,10 @@ public class TaskDataSource {
         try {
             String title = t.getTitle();
             String desc = t.getDesc();
-            String deadline = t.getDeadline();
+            String ddldate = t.getDeadline();
             URL url = new URL("http://10.0.2.2:3000/edittask?orginaltitle=" + orgtitle +
                     "&username=" + inputusername + "&title=" + title + "&desc=" + desc +
-                    "&deadline=" + deadline);
+                    "&deadline=" + ddldate);
             LoginAccessWebTask task = new LoginAccessWebTask();
             task.execute(url);
             String a = task.get();

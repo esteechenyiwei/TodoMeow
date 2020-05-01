@@ -335,7 +335,17 @@ app.use("/gettask", (req, res) => {
           },
         ]);
       } else {
-        res.json(person.currentTodos);
+        var li = person.currentTodos;
+        li.map((item, i) => {
+          if (item.deadline) {
+            item.deadline = item.deadline.toDateString();
+            console.log(item.deadline);
+          } else {
+            item.deadline = "05/01/2020";
+          }
+        })
+        res.json(li);
+        console.log(li);
       }
     }
   );
@@ -345,7 +355,8 @@ app.use("/addtask", (req, res) => {
   var username = req.query.username;
   var title = req.query.title;
   var description = req.query.desc;
-  var ddl = req.query.deadline;
+  var ddl = new Date(req.query.deadline);
+  console.log("the deadline I got was " + req.query.deadline);
   var now = new Date();
   var newTask = new Todo({
     title: title,
@@ -377,6 +388,7 @@ app.use("/addtask", (req, res) => {
             console.log("error in saving person");
           } else {
             res.json({ status: "success" });
+            console.log("saved new task, deadline is " + ddl);
           }
         });
       }
@@ -389,13 +401,14 @@ app.use("/edittask", (req, res) => {
   var user = req.query.username;
   var orgtitle = req.query.orginaltitle;
   var newdesc = req.query.desc;
-  var newdeadline = req.query.deadline;
+  var newdeadline = new Date(req.query.deadline);
+  console.log("edit: the deadline I got was " + req.query.deadline);
   var newtitle = req.query.title;
 
   var newTask = new Todo({
     title: newtitle,
     desc: newdesc,
-    // deadline: newdeadline,
+    deadline: newdeadline,
   });
 
   User.findOneAndUpdate(
