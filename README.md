@@ -8,3 +8,33 @@ This project is a Todo list app that also enables the user to raise his pet cat 
 
 This application has both Android App and also web-end App. It is also connected to a MongoDB database, which I (Estee) was mainly in charge of developing. Users can register an account with their emails, log in and log out, and change their passwords. Users can add, delete, edit and complete/archive a task, and the tasks have deadlines which expires and causes the cat level to drop. The web-end front end is developed with css and html, and the Android front end is developed with Java. Both the web and Android are developed on node.js. 
 
+## Interface Showcase:
+
+### Web End
+
+**Dashboard**
+
+![](images/dashboard.png)
+
+**Tasks**
+
+![](images/tasks.png)
+
+**Rankings of Top 10 Task Completors**
+
+![](images/rankings.png)
+
+### Android End
+
+**Login**
+
+![](images/loginandroid.png)
+
+**Tasks**
+
+![](images/taskandroid.png)
+
+
+**Edit Activity**
+
+![](images/editandroid.png)
